@@ -11,8 +11,8 @@ public class Vehicle extends SimulatedObject{
     private int maxSpeed;
     private int currentSpeed;
     private int location;
-    private int pollutionGroup;
-    private int totalPolluted;
+    private int contaminationClass;
+    private int totalContaminated;
     private int distance;
     private List<Junction> itinerary;
     private VehicleStatus status;
@@ -22,18 +22,32 @@ public class Vehicle extends SimulatedObject{
         super(id);
         if(maxSpeed > 0 && contClass >= 0 && contClass <= 10 && itinerary.size() >= 2){
             this.maxSpeed = maxSpeed;
-            pollutionGroup = contClass;
+            contaminationClass = contClass;
             this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
         }
     }
 
     @Override
-    void advance(int time) {
+    protected void advance(int time) {
+        if(status == VehicleStatus.TRAVELING){
+            if(location + currentSpeed < currentRoad.getLength())
+                location += currentSpeed;
+            else
+                location = currentRoad.getLength();
 
+
+        }
     }
 
     @Override
     public JSONObject report() {
         return null;
+    }
+
+    protected void setSpeed(int s){
+        currentSpeed = s;
+    }
+    protected void setContaminationClass(int c){
+        contaminationClass = c;
     }
 }
