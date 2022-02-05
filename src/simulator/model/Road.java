@@ -1,19 +1,119 @@
 package simulator.model;
 
 import org.json.JSONObject;
+import simulator.misc.SortedArrayList;
 
-public class Road extends SimulatedObject{
-    Road(String id) {
+import javax.print.attribute.standard.JobHoldUntil;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public abstract class Road extends SimulatedObject{
+    private Junction srcJunc;
+    private Junction destJunc;
+    private int length;
+    private int maxSpeed;
+    private int actLimit;
+    private int contaminationLimit;
+    private Weather weather;
+    private int totalContamination = 0;
+    private List<Vehicle> vehiclesInRoad; //TODO tiene que estar siempre ordenada ¿como? ª
+    private Comparator<Vehicle> c;
+    Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
+        //TODO necesito Junction para poner la de salida como saliente y la de destino como entrante
+        if(maxSpeed>= 0 && contLimit >= 0 && length >= 0 && srcJunc != null && destJunc != null && weather != null){
+            this.maxSpeed = maxSpeed;
+            this.actLimit = maxSpeed;
+            this.srcJunc = srcJunc;
+            this.destJunc = destJunc;
+            contaminationLimit = contLimit;
+            this.length = length;
+            this.weather = weather;
+            c = new Comparator<Vehicle>() {
+                @Override
+                public int compare(Vehicle o1, Vehicle o2) {
+
+                    if(o1.getLocation() > o2.getLocation()){
+                        return 1;
+                    }
+                    else if(o1.getLocation() < o2.getLocation()){
+                        return -1;
+                    }
+                    return 0;
+
+                }
+            };
+            vehiclesInRoad = new SortedArrayList<Vehicle>();
+
+        }
+        else{
+            throw new IllegalArgumentException("Datos introducidos erroneos"); // Las excepciones estaría piola que las ponga en ingles si
+        }
     }
 
     @Override
     void advance(int time) {
-
+        reduceTotalContamination();
+        updateSpeedLimit();
+        for(Vehicle veh: vehiclesInRoad){
+            veh.setSpeed(calculateVehicleSpeed(veh));
+            veh.advance(time);
+        }
+        vehiclesInRoad.sort(c);
     }
+
+    void enter(Vehicle v){
+        if(v.getLocation() == 0 && v.getSpeed() == 0){
+            vehiclesInRoad.add(v);
+        }
+        else{
+            throw new IllegalArgumentException("El coche o no está en la posición 0 o la velocidad no está en 0");
+        }
+    }
+
+    void exit(Vehicle v){
+        vehiclesInRoad.remove(v);
+    }
+
+    void setWeather(Weather w){
+        if(w != null){
+            weather = w;
+        }
+        else{
+            throw new NullPointerException("El weather no está definido");
+        }
+    }
+    void addContamination(int c){
+        if(c >= 0){
+            totalContamination += c;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
+    }
+    abstract void reduceTotalContamination();
+    abstract void updateSpeedLimit();
+    abstract int calculateVehicleSpeed(Vehicle v);
 
     @Override
     public JSONObject report() {
-        return null;
+        JSONObject road = new JSONObject();
+        road.put("id",_id);
+        road.put("speedlimit",actLimit);
+        road.put("weather",weather);
+        road.put("co2",totalContamination);
+        road.put("vehicles",vehiclesInRoad);
+        return road;
     }
+    public int getLength(){ return length;}
+    public Junction getDest(){ return destJunc;}
+    public Junction getSrc(){ return srcJunc;}
+    public Weather getWeather(){ return weather;}
+    public int getContLimit(){ return contaminationLimit;}
+    public int getMaxSpeed(){ return maxSpeed;}
+    public int getTotalCO2(){ return totalContamination;}
+    public int getSpeedLimit(){ return actLimit;}
+    public List<Vehicle> getVehicles(){ return vehiclesInRoad;}
+
 }

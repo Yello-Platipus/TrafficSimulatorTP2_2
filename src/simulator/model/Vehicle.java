@@ -25,34 +25,57 @@ public class Vehicle extends SimulatedObject{
             contaminationClass = contClass;
             this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
         }
+        else{
+            throw new IllegalArgumentException("Datos fuera de los limites");
+        }
     }
-
+// Excepciones que vamos a usar : illegal argument, run time exception, null pointer exception
     @Override
     protected void advance(int time) {
         if(status == VehicleStatus.TRAVELING){
-            if(location + currentSpeed < currentRoad.getLength())
-                location += currentSpeed;
-            else
-                location = currentRoad.getLength();
+            int prevLocation = location;
+            location = Math.min(location + currentSpeed, currentRoad.getLength());
+            int contamination = (location - prevLocation) * contaminationClass;
+            totalContaminated += contamination;
 
-
+            //TODO CONTAMINACION A LA CARRETERA
+            //TODO Apartado C Pagina 6
         }
+    }
+    void moveToNextRoad(){
+        //TODO
     }
 
     @Override
     public JSONObject report() {
-        return null;
+        JSONObject vehicle = new JSONObject();
+        vehicle.put("id",_id);
+        vehicle.put("speed",currentSpeed);
+        vehicle.put("distance",distance);
+        vehicle.put("co2",totalContaminated);
+        vehicle.put("class",contaminationClass);
+        vehicle.put("status",status);
+        vehicle.put("road",currentRoad);
+        vehicle.put("location",location);
+        return vehicle;
+
     }
 
     protected void setSpeed(int s){
-        currentSpeed = s;
+        if(s >= 0){
+            currentSpeed = Math.min(maxSpeed,s);
+        }
+        else  {throw new IllegalArgumentException("ERROR: Velocidad menor que 0");}
+
     }
     protected void setContaminationClass(int c){
-        contaminationClass = c;
+        if(0 <= c && c <= 10){
+            contaminationClass = c;
+        }
+        else  {throw new IllegalArgumentException("ERROR: Contaminacion mayor que 10 o menor que 0");}
+
     }
-    public int getLocation(){
-        return location;
-    }
+    public int getLocation(){return location;}
     public int getSpeed(){
         return currentSpeed;
     }
@@ -71,7 +94,5 @@ public class Vehicle extends SimulatedObject{
     public List<Junction> getItinerary(){
         return itinerary;
     }
-    public Road getRoad(){
-        return currentRoad;
-    }
+    public Road getRoad(){return currentRoad;}
 }
