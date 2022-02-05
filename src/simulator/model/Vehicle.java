@@ -50,4 +50,28 @@ public class Vehicle extends SimulatedObject{
     protected void setContaminationClass(int c){
         contaminationClass = c;
     }
+    public int getLocation(){
+        return location;
+    }
+    public int getSpeed(){
+        return currentSpeed;
+    }
+    public int getMaxSpeed(){
+        return maxSpeed;
+    }
+    public int getContClass(){
+        return contaminationClass;
+    }
+    public VehicleStatus getStatus(){
+        return status;
+    }
+    public int getTotalCO2(){
+        return totalContaminated;
+    }
+    public List<Junction> getItinerary(){
+        return itinerary;
+    }
+    public Road getRoad(){
+        return currentRoad;
+    }
 }
