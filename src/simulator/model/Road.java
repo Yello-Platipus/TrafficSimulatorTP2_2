@@ -9,16 +9,19 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class Road extends SimulatedObject{
+
     private Junction srcJunc;
     private Junction destJunc;
     private int length;
-    private int maxSpeed;
-    private int actLimit;
-    private int contaminationLimit;
-    private Weather weather;
-    private int totalContamination = 0;
+    protected int maxSpeed;
+    protected int actLimit;
+    protected int contaminationLimit;
+    //Big Chungus https://imgur.com/RsTaCPT.gif
+    protected Weather weather;
+    protected int totalContamination = 0;
     private List<Vehicle> vehiclesInRoad; //TODO tiene que estar siempre ordenada ¿como? ª
     private Comparator<Vehicle> c;
+
     Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
         //TODO necesito Junction para poner la de salida como saliente y la de destino como entrante
@@ -34,10 +37,10 @@ public abstract class Road extends SimulatedObject{
                 @Override
                 public int compare(Vehicle o1, Vehicle o2) {
 
-                    if(o1.getLocation() > o2.getLocation()){
+                    if(o1.getLocation() < o2.getLocation()){
                         return 1;
                     }
-                    else if(o1.getLocation() < o2.getLocation()){
+                    else if(o1.getLocation() > o2.getLocation()){
                         return -1;
                     }
                     return 0;
