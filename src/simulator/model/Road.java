@@ -25,34 +25,42 @@ public abstract class Road extends SimulatedObject{
     Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
         //TODO necesito Junction para poner la de salida como saliente y la de destino como entrante
-        if(maxSpeed>= 0 && contLimit >= 0 && length >= 0 && srcJunc != null && destJunc != null && weather != null){
-            this.maxSpeed = maxSpeed;
-            this.actLimit = maxSpeed;
-            this.srcJunc = srcJunc;
-            this.destJunc = destJunc;
-            contaminationLimit = contLimit;
-            this.length = length;
-            this.weather = weather;
-            c = new Comparator<Vehicle>() {
-                @Override
-                public int compare(Vehicle o1, Vehicle o2) {
+        if(maxSpeed < 0){
+            throw new IllegalArgumentException("ERROR: Negative max speed ");
+        }
+        if(contLimit < 0){
+            throw new IllegalArgumentException("ERROR: Negative contamination limit");
+        }
+        if(srcJunc == null || destJunc == null){
+            throw new IllegalArgumentException("ERROR: Juction = null");
+        }
+        if(weather == null){
+            throw new IllegalArgumentException("ERROR: Weather = null");
+        }
+        this.maxSpeed = maxSpeed;
+        this.actLimit = maxSpeed;
+        this.srcJunc = srcJunc;
+        this.destJunc = destJunc;
+        contaminationLimit = contLimit;
+        this.length = length;
+        this.weather = weather;
+        c = new Comparator<Vehicle>() {
+            @Override
+            public int compare(Vehicle o1, Vehicle o2) {
 
-                    if(o1.getLocation() < o2.getLocation()){
-                        return 1;
-                    }
-                    else if(o1.getLocation() > o2.getLocation()){
-                        return -1;
-                    }
-                    return 0;
-
+                if(o1.getLocation() < o2.getLocation()){
+                    return 1;
                 }
-            };
-            vehiclesInRoad = new SortedArrayList<Vehicle>();
+                else if(o1.getLocation() > o2.getLocation()){
+                    return -1;
+                }
+                return 0;
 
-        }
-        else{
-            throw new IllegalArgumentException("Datos introducidos erroneos"); // Las excepciones estaría piola que las ponga en ingles si
-        }
+            }
+        };
+        vehiclesInRoad = new SortedArrayList<Vehicle>();
+
+
     }
 
     @Override
