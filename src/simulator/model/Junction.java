@@ -16,7 +16,7 @@ public class Junction extends SimulatedObject{
     //estrategia para extraer elementos de la cola (de tipo DequeuingStrategy)
     private int xCoor, yCoor;
 
-    Junction(String id, LightSwitchStrategy lsStrategy, DequeingStrategy dqStrategy, int xCoor, int yCoor) {
+    Junction(String id, LightSwitchingStrategy lsStrategy, DequeuingStrategy dqStrategy, int xCoor, int yCoor) {
         super(id);
         if(lsStrategy != null && dqStrategy != null && xCoor >= 0 && yCoor >= 0){
             this.xCoor = xCoor;

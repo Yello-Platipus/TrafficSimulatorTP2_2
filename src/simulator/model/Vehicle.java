@@ -41,9 +41,11 @@ public class Vehicle extends SimulatedObject{
             location = Math.min(location + currentSpeed, currentRoad.getLength());
             int contamination = (location - prevLocation) * contaminationClass;
             totalContaminated += contamination;
-
-            //TODO CONTAMINACION A LA CARRETERA
-            //TODO Apartado C Pagina 6
+            currentRoad.addContamination(contamination);
+            if(location >= currentRoad.getLength()){
+                status = VehicleStatus.WAITING;
+                //TODO llamar a metodo de junction que haga entrar en la cola
+            }
         }
     }
     void moveToNextRoad(){
