@@ -20,14 +20,18 @@ public class Vehicle extends SimulatedObject{
 
     Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) {
         super(id);
-        if(maxSpeed > 0 && contClass >= 0 && contClass <= 10 && itinerary.size() >= 2){
-            this.maxSpeed = maxSpeed;
-            contaminationClass = contClass;
-            this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
+        if(maxSpeed < 0){
+            throw new IllegalArgumentException("ERROR: Negative max speed ");
         }
-        else{
-            throw new IllegalArgumentException("Datos fuera de los limites");
+        if(contClass < 0 || contClass > 10){
+            throw new IllegalArgumentException("ERROR: Contamination class out of bounds");
         }
+        if(itinerary.size() < 2){
+            throw new IllegalArgumentException("ERROR: Itinerary size lower that 2");
+        }
+        this.maxSpeed = maxSpeed;
+        contaminationClass = contClass;
+        this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
     }
 // Excepciones que vamos a usar : illegal argument, run time exception, null pointer exception
     @Override
