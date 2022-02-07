@@ -42,7 +42,7 @@ public class Junction extends SimulatedObject{
         if(outGoingRoadMap.containsKey(r.getDest()))
             throw new IllegalArgumentException("The road already exists");
         if(r.getSrc() != this)
-            throw new IllegalArgumentException("The road doesn't come out from this junction")
+            throw new IllegalArgumentException("The road doesn't come out from this junction");
         outGoingRoadMap.put(r.getDest(), r);
     }
 
