@@ -64,7 +64,6 @@ public class Vehicle extends SimulatedObject{
         vehicle.put("road",currentRoad);
         vehicle.put("location",location);
         return vehicle;
-
     }
 
     protected void setSpeed(int s){

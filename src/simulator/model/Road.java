@@ -2,10 +2,10 @@ package simulator.model;
 
 import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
-
 import javax.print.attribute.standard.JobHoldUntil;
 import java.util.ArrayList;
 import java.util.Comparator;
+//Big Chungus https://imgur.com/RsTaCPT.gif
 import java.util.List;
 
 public abstract class Road extends SimulatedObject{
@@ -16,7 +16,6 @@ public abstract class Road extends SimulatedObject{
     protected int maxSpeed;
     protected int actLimit;
     protected int contaminationLimit;
-    //Big Chungus https://imgur.com/RsTaCPT.gif
     protected Weather weather;
     protected int totalContamination = 0;
     private List<Vehicle> vehiclesInRoad; //TODO tiene que estar siempre ordenada ¿como? ª
