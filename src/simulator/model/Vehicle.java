@@ -14,6 +14,7 @@ public class Vehicle extends SimulatedObject{
     private int contaminationClass;
     private int totalContaminated;
     private int distance;
+    private int itineraryIndex;
     private List<Junction> itinerary;
     private VehicleStatus status;
     private Road currentRoad;
@@ -32,6 +33,8 @@ public class Vehicle extends SimulatedObject{
         this.maxSpeed = maxSpeed;
         contaminationClass = contClass;
         this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
+        itineraryIndex = -1;
+        status = VehicleStatus.PENDING;
     }
 // Excepciones que vamos a usar : illegal argument, run time exception, null pointer exception
     @Override
@@ -39,17 +42,28 @@ public class Vehicle extends SimulatedObject{
         if(status == VehicleStatus.TRAVELING){
             int prevLocation = location;
             location = Math.min(location + currentSpeed, currentRoad.getLength());
-            int contamination = (location - prevLocation) * contaminationClass;
-            totalContaminated += contamination;
-            currentRoad.addContamination(contamination);
+            totalContaminated += (location - prevLocation) * contaminationClass;
+            currentRoad.addContamination((location - prevLocation) * contaminationClass);
             if(location >= currentRoad.getLength()){
+                itinerary.get(itineraryIndex + 1).enter(this);
                 status = VehicleStatus.WAITING;
-                //TODO llamar a metodo de junction que haga entrar en la cola
             }
         }
     }
     void moveToNextRoad(){
-        //TODO
+        if(status != VehicleStatus.PENDING && status != VehicleStatus.WAITING)
+            throw new IllegalArgumentException("ERROR: Vehicle is moving");
+        if(status != VehicleStatus.PENDING)
+            currentRoad.exit(this);
+        if(status == VehicleStatus.PENDING) {
+            itinerary.get(0).enter(this);
+            itineraryIndex = 0;
+        }
+        else if(itineraryIndex != itinerary.size() - 1) {
+            itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
+            itineraryIndex++;
+        }
+        distance = 0;
     }
 
     @Override
@@ -60,27 +74,33 @@ public class Vehicle extends SimulatedObject{
         vehicle.put("distance",distance);
         vehicle.put("co2",totalContaminated);
         vehicle.put("class",contaminationClass);
-        vehicle.put("status",status);
+        vehicle.put("status",status.toString());
         vehicle.put("road",currentRoad);
         vehicle.put("location",location);
         return vehicle;
     }
 
     protected void setSpeed(int s){
-        if(s >= 0){
+        if (s >= 0) {
             currentSpeed = Math.min(maxSpeed,s);
         }
-        else  {throw new IllegalArgumentException("ERROR: Velocidad menor que 0");}
+        else  {
+            throw new IllegalArgumentException("ERROR: Velocidad menor que 0");
+        }
 
     }
     protected void setContaminationClass(int c){
-        if(0 <= c && c <= 10){
+        if (0 <= c && c <= 10) {
             contaminationClass = c;
         }
-        else  {throw new IllegalArgumentException("ERROR: Contaminacion mayor que 10 o menor que 0");}
+        else {
+            throw new IllegalArgumentException("ERROR: Contaminacion mayor que 10 o menor que 0");
+        }
 
     }
-    public int getLocation(){return location;}
+    public int getLocation(){
+        return location;
+    }
     public int getSpeed(){
         return currentSpeed;
     }
@@ -99,5 +119,7 @@ public class Vehicle extends SimulatedObject{
     public List<Junction> getItinerary(){
         return itinerary;
     }
-    public Road getRoad(){return currentRoad;}
+    public Road getRoad(){
+        return currentRoad;
+    }
 }

@@ -18,12 +18,12 @@ public abstract class Road extends SimulatedObject{
     protected int contaminationLimit;
     protected Weather weather;
     protected int totalContamination = 0;
-    private List<Vehicle> vehiclesInRoad; //TODO tiene que estar siempre ordenada ¿como? ª
+    private List<Vehicle> vehiclesInRoad;
     private Comparator<Vehicle> c;
 
     Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
-        //TODO necesito Junction para poner la de salida como saliente y la de destino como entrante
+
         if(maxSpeed < 0){
             throw new IllegalArgumentException("ERROR: Negative max speed ");
         }
@@ -46,7 +46,6 @@ public abstract class Road extends SimulatedObject{
         c = new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle o1, Vehicle o2) {
-
                 if(o1.getLocation() < o2.getLocation()){
                     return 1;
                 }
@@ -54,12 +53,9 @@ public abstract class Road extends SimulatedObject{
                     return -1;
                 }
                 return 0;
-
             }
         };
         vehiclesInRoad = new SortedArrayList<Vehicle>();
-
-
     }
 
     @Override
@@ -111,7 +107,7 @@ public abstract class Road extends SimulatedObject{
         JSONObject road = new JSONObject();
         road.put("id",_id);
         road.put("speedlimit",actLimit);
-        road.put("weather",weather);
+        road.put("weather",weather.toString());
         road.put("co2",totalContamination);
         road.put("vehicles",vehiclesInRoad);
         return road;

@@ -47,7 +47,7 @@ public class Junction extends SimulatedObject{
     }
 
     void enter(Vehicle v){
-        if(incomingRoadList.contains(v.getRoad()))
+        if(!incomingRoadList.contains(v.getRoad()))
             throw new IllegalArgumentException("The road which the vehicle is in is not connected to this junction");
         queueList.get(incomingRoadList.indexOf(v.getRoad())).add(v);
         queueMap.get(v.getRoad()).add(v);
@@ -59,7 +59,12 @@ public class Junction extends SimulatedObject{
 
     @Override
     void advance(int time) {
-
+        List<Vehicle> aux = ds.dequeue(queueList.get(greenInd));
+        for(Vehicle v : aux){
+            queueList.get(greenInd).remove(v);
+            queueMap.get(incomingRoadList.get(greenInd)).remove(v);
+            v.moveToNextRoad();
+        }
     }
 
     @Override
