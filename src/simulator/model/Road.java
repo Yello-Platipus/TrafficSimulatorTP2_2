@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
 import javax.print.attribute.standard.JobHoldUntil;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 //Big Chungus https://imgur.com/RsTaCPT.gif
 import java.util.List;
@@ -112,14 +113,32 @@ public abstract class Road extends SimulatedObject{
         road.put("vehicles",vehiclesInRoad);
         return road;
     }
-    public int getLength(){ return length;}
-    public Junction getDest(){ return destJunc;}
-    public Junction getSrc(){ return srcJunc;}
-    public Weather getWeather(){ return weather;}
-    public int getContLimit(){ return contaminationLimit;}
-    public int getMaxSpeed(){ return maxSpeed;}
-    public int getTotalCO2(){ return totalContamination;}
-    public int getSpeedLimit(){ return actLimit;}
-    public List<Vehicle> getVehicles(){ return vehiclesInRoad;}
+    public int getLength(){
+        return length;
+    }
+    public Junction getDest(){
+        return destJunc;
+    }
+    public Junction getSrc(){
+        return srcJunc;
+    }
+    public Weather getWeather(){
+        return weather;
+    }
+    public int getContLimit(){
+        return contaminationLimit;
+    }
+    public int getMaxSpeed(){
+        return maxSpeed;
+    }
+    public int getTotalCO2(){
+        return totalContamination;
+    }
+    public int getSpeedLimit(){
+        return actLimit;
+    }
+    public List<Vehicle> getVehicles(){
+        return Collections.unmodifiableList(new ArrayList<>(vehiclesInRoad));
+    }
 
 }

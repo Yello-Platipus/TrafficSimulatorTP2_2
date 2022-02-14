@@ -92,4 +92,8 @@ public class Junction extends SimulatedObject{
         road.put("queues", array);
         return road;
     }
+
+    public boolean connectedTo(Junction j){
+        return outGoingRoadMap.containsKey(j);
+    }
 }

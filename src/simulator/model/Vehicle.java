@@ -117,7 +117,7 @@ public class Vehicle extends SimulatedObject{
         return totalContaminated;
     }
     public List<Junction> getItinerary(){
-        return itinerary;
+        return Collections.unmodifiableList(new ArrayList<>(itinerary));
     }
     public Road getRoad(){
         return currentRoad;
