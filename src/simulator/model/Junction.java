@@ -47,7 +47,7 @@ public class Junction extends SimulatedObject{
     }
 
     void enter(Vehicle v){
-        if(incomingRoadList.indexOf(v.getRoad()) == -1)
+        if(incomingRoadList.contains(v.getRoad()))
             throw new IllegalArgumentException("The road which the vehicle is in is not connected to this junction");
         queueList.get(incomingRoadList.indexOf(v.getRoad())).add(v);
         queueMap.get(v.getRoad()).add(v);
