@@ -77,6 +77,12 @@ public abstract class Road extends SimulatedObject{
         else{
             throw new IllegalArgumentException("El coche o no está en la posición 0 o la velocidad no está en 0");
         }
+        // Versión más bonita:
+        /*
+        if(v.getLocation() != 0 || v.getSpeed() != 0)
+            throw new IllegalArgumentException("El coche o no está en la posición 0 o la velocidad no está en 0");
+        vehiclesInRoad.add(v);
+        */
     }
 
     void exit(Vehicle v){
@@ -90,14 +96,26 @@ public abstract class Road extends SimulatedObject{
         else{
             throw new NullPointerException("El weather no está definido");
         }
+        // Versión más bonita:
+        /*
+        if(w==null)
+            throw new NullPointerException("El weather no está definido");
+        weather = w;
+        */
     }
     void addContamination(int c){
         if(c >= 0){
             totalContamination += c;
         }
         else{
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("No se admiten valores negativos");
         }
+        // Versión más bonita:
+        /*
+        if(c < 0)
+            throw new IllegalArgumentException("No se admiten valores negativos");
+        totalContamination += c;
+        */
     }
     abstract void reduceTotalContamination();
     abstract void updateSpeedLimit();

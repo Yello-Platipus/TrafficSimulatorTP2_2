@@ -92,7 +92,8 @@ public class RoadMap {
     }
 
     public JSONObject report(){
-
+        return null;
+        //TODO PATATA
     }
 
 }
