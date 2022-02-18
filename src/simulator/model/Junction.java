@@ -83,7 +83,7 @@ public class Junction extends SimulatedObject{
             JSONArray auxV = new JSONArray();
             for(int j = 0; j < queueList.get(i).size(); j++)
                 auxV.put(queueList.get(i).get(j).toString());
-            jo.put("vehicles", jo);
+            jo.put("vehicles", auxV);
             array.put(jo);
         }
         JSONObject road = new JSONObject();
