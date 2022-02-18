@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -92,7 +93,25 @@ public class RoadMap {
     }
 
     public JSONObject report(){
+        JSONArray arrayJunc = new JSONArray();
+        JSONArray arrayRoad = new JSONArray();
+        JSONArray arrayVeh = new JSONArray();
+        JSONObject roadMap = new JSONObject();
+        for(int i = 0; i < junctionList.size();i++){
+            arrayJunc.put(junctionList.get(i).report());
+        }
+        for(int i = 0; i < roadList.size();i++){
+            arrayRoad.put(roadList.get(i).report());
+        }
+        for(int i = 0; i < vehicleList.size();i++){
+            arrayVeh.put(vehicleList.get(i).report());
+        }
 
+        roadMap.put("junctions",arrayJunc);
+        roadMap.put("road",arrayRoad);
+        roadMap.put("vehicles",arrayVeh);
+
+        return  roadMap;
     }
 
 }
