@@ -5,8 +5,7 @@ public class NewCityRoadEvent extends NewRoadEvent{
     private String srcJun, destJun;
     private int length, co2Limit, maxSpeed;
     private Weather weather;
-    public NewCityRoadEvent(int time, String id, String srcJun, String destJunc, int length, int co2Limit, int maxSpeed, Weather weather)
-    {
+    public NewCityRoadEvent(int time, String id, String srcJun, String destJunc, int length, int co2Limit, int maxSpeed, Weather weather) {
         super(time,id,srcJun,destJunc,length,co2Limit,maxSpeed,weather);
     }
 
