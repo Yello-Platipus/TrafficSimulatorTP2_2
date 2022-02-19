@@ -23,5 +23,7 @@ public class NewVehicleEvent extends Event  {
             aux.add(map.getJunction(itinerary.get(i)));
         }
         Vehicle vehicle = new Vehicle( id,  maxSpeed,  contClass, aux);
+
+        vehicle.moveToNextRoad();
     }
 }
