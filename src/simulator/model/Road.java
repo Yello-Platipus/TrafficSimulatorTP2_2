@@ -6,7 +6,6 @@ import javax.print.attribute.standard.JobHoldUntil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-//Big Chungus https://imgur.com/RsTaCPT.gif
 import java.util.List;
 
 public abstract class Road extends SimulatedObject{
@@ -56,7 +55,7 @@ public abstract class Road extends SimulatedObject{
                 return 0;
             }
         };
-        vehiclesInRoad = new SortedArrayList<Vehicle>();
+        vehiclesInRoad = new SortedArrayList<Vehicle>(c);
     }
 
     @Override
