@@ -15,7 +15,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
         return max;
     }
 
-    MostCrowdedStrategy(int timeSlot){
+    public MostCrowdedStrategy(int timeSlot){
         ticks = timeSlot;
     }
 
