@@ -25,7 +25,7 @@ public class NewJunctionEventBuilder extends Builder<Event>{
                 lssf.createInstance(data.getJSONObject("ls_strategy")),
                 dqsf.createInstance(data.getJSONObject("dq_strategy")),
                 data.getJSONArray("coor").getInt(0),
-                data.getJSONArray("coor").getInt((1))
+                data.getJSONArray("coor").getInt(1)
         );
     }
 }
