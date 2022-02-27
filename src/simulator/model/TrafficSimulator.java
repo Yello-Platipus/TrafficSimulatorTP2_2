@@ -33,7 +33,7 @@ public class TrafficSimulator {
 
 
     }
-    void addEvent(Event e){
+    public void addEvent(Event e){
         eventList.add(e);
         eventList.sort(c);
     }
