@@ -9,6 +9,7 @@ import simulator.model.TrafficSimulator;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class Controller {
     private TrafficSimulator simulator;
@@ -33,11 +34,13 @@ public class Controller {
     public void run(int n, OutputStream out){
         JSONObject jo= new JSONObject();
         JSONArray jsonArray = new JSONArray();
+        PrintStream ps = new PrintStream(out);
         for(int i =0; i< n;i++){
             simulator.advance();
             jsonArray.put(simulator.report());
         }
         jo.put("states",jsonArray);
+        ps.print(jo.toString(3));//No le hagas mucho caso a ese 3
     }
     public void reset(){
         simulator.reset();

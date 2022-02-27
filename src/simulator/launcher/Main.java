@@ -15,6 +15,7 @@ import simulator.model.Event;
 public class Main {
 
 	private final static Integer _timeLimitDefaultValue = 10;
+	private static Integer ticks= _timeLimitDefaultValue;
 	private static String _inFile = null;
 	private static String _outFile = null;
 	private static Factory<Event> _eventsFactory = null;
@@ -33,6 +34,7 @@ public class Main {
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);
 			parseOutFileOption(line);
+			parseTicksOption(line);
 
 			// if there are some remaining arguments, then something wrong is
 			// provided in the command line!
@@ -82,14 +84,19 @@ public class Main {
 		_outFile = line.getOptionValue("o");
 	}
 
-	private static void initFactories() {
+	private static void parseTicksOption(CommandLine line) throws ParseException {
+		// ?¿?¿?¿?¿?¿?¿?¿
+		ticks = Integer.valueOf(line.getOptionValue("t"));
+	}
 
+	private static void initFactories() {
 		// TODO complete this method to initialize _eventsFactory
 
 	}
 
 	private static void startBatchMode() throws IOException {
 		// TODO complete this method to start the simulation
+
 	}
 
 	private static void start(String[] args) throws IOException {
