@@ -20,7 +20,7 @@ public class NewInterCityRoadEventBuilder extends Builder<Event>{
                 data.getString("dest"),
                 data.getInt("length"),
                 data.getInt("co2limit"),
-                data.getInt("maxSpeed"),
+                data.getInt("maxspeed"),
                 Weather.valueOf(data.getString("weather"))
         );
     }

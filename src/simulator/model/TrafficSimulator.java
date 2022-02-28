@@ -10,7 +10,7 @@ import java.util.List;
 public class TrafficSimulator {
     private RoadMap roadMap;
     private List<Event> eventList;
-    private int simulationTime;
+    private int simulationTime = 0;
     private Comparator<Event> c;
 
     public TrafficSimulator(){
@@ -29,7 +29,7 @@ public class TrafficSimulator {
             }
         };
         eventList = new SortedArrayList<Event>(c);
-        simulationTime = 0;
+       
 
 
     }
@@ -52,6 +52,7 @@ public class TrafficSimulator {
             roadMap.getRoads().get(i).advance(simulationTime);
         }
     }
+    
     public void reset(){
         roadMap.reset();
         eventList.clear();
