@@ -1,6 +1,11 @@
 package simulator.launcher;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -9,8 +14,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import simulator.factories.Factory;
+
+import simulator.control.Controller;
+import simulator.factories.*;
+import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
+import simulator.model.LightSwitchingStrategy;
+import simulator.model.TrafficSimulator;
 
 public class Main {
 
@@ -90,12 +100,38 @@ public class Main {
 	}
 
 	private static void initFactories() {
-		// TODO complete this method to initialize _eventsFactory
+
+		List<Builder<LightSwitchingStrategy>> lsbs = new ArrayList<>();
+		lsbs.add( new RoundRobinStrategyBuilder() );
+		lsbs.add( new MostCrowdedStrategyBuilder() );
+
+		Factory<LightSwitchingStrategy> lssFactory = new BuilderBasedFactory<>(lsbs);
+		List<Builder<DequeuingStrategy>> dqbs = new ArrayList<>();
+		dqbs.add( new MoveFirstStrategyBuilder() );
+		dqbs.add( new MoveAllStrategyBuilder() );
+
+		Factory<DequeuingStrategy> dqsFactory = new BuilderBasedFactory<>(dqbs);
+		List<Builder<Event>> ebs = new ArrayList<>();
+		ebs.add( new NewJunctionEventBuilder(lssFactory,dqsFactory) );
+		ebs.add( new NewCityRoadEventBuilder() );
+		ebs.add( new NewInterCityRoadEventBuilder() );
+		ebs.add( new NewVehicleEventBuilder());
+		ebs.add( new SetContClassEventBuilder());
+		ebs.add( new SetWeatherEventBuilder());
+		_eventsFactory = new BuilderBasedFactory<Event>(ebs);
 
 	}
 
 	private static void startBatchMode() throws IOException {
-		// TODO complete this method to start the simulation
+		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);
+		controlador.loadEvents(new FileInputStream(_inFile));
+		FileOutputStream aux = new FileOutputStream(_outFile);
+		if(aux != null){
+			controlador.run(ticks,aux);
+		}
+		else{
+			controlador.run(ticks,System.out);// ? xd
+		}
 
 	}
 
