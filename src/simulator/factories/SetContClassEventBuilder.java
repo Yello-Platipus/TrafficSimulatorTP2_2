@@ -3,7 +3,7 @@ package simulator.factories;
 import org.json.JSONObject;
 import simulator.misc.Pair;
 import simulator.model.Event;
-import simulator.model.NewSetContClassEvent;
+import simulator.model.SetContClassEvent;
 import simulator.model.SetWeatherEvent;
 import simulator.model.Weather;
 
@@ -20,7 +20,7 @@ public class SetContClassEventBuilder extends Builder<Event>{
         List<Pair<String, Integer>> lista = new ArrayList<Pair<String, Integer>>();
         for(int i = 0; i < data.getJSONArray("info").length(); i++)
             lista.add(new Pair<String, Integer> (data.getJSONArray("info").getJSONObject(i).getString("road"), data.getJSONArray("info").getJSONObject(i).getInt("class")));
-        return new NewSetContClassEvent(
+        return new SetContClassEvent(
                 data.getInt("time"),
                 lista
         );

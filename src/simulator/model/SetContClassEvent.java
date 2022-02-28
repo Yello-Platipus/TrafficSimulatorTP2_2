@@ -3,9 +3,9 @@ package simulator.model;
 import simulator.misc.Pair;
 import java.util.List;
 
-public class NewSetContClassEvent extends Event{
+public class SetContClassEvent extends Event{
     List<Pair<String,Integer>> cs;
-    public NewSetContClassEvent(int time, List<Pair<String,Integer>> cs) {
+    public SetContClassEvent(int time, List<Pair<String,Integer>> cs) {
         super(time);
 
         if(cs == null){
@@ -18,7 +18,7 @@ public class NewSetContClassEvent extends Event{
     void execute(RoadMap map) {
         for(int i = 0; i < cs.size();i++){
             try{
-                map.getVehicle(cs.get(i).getFirst()).setContaminationClass(cs.get(i).getSecond());
+                map.getVehicle(cs.get(i).getFirst()).setContClass(cs.get(i).getSecond());
             }
             catch (Exception e){
                 throw new IllegalArgumentException("The road does not exists (SetWeatherEvent");

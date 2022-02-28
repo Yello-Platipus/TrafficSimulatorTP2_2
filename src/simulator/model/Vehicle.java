@@ -89,7 +89,7 @@ public class Vehicle extends SimulatedObject{
         }
 
     }
-    protected void setContaminationClass(int c){
+    protected void setContClass(int c){
         if (0 <= c && c <= 10) {
             contaminationClass = c;
         }
