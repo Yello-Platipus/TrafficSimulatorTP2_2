@@ -19,7 +19,7 @@ public class SetContClassEventBuilder extends Builder<Event>{
     protected Event createTheInstance(JSONObject data) {
         List<Pair<String, Integer>> lista = new ArrayList<Pair<String, Integer>>();
         for(int i = 0; i < data.getJSONArray("info").length(); i++)
-            lista.add(new Pair<String, Integer> (data.getJSONArray("info").getJSONObject(i).getString("road"), data.getJSONArray("info").getJSONObject(i).getInt("class")));
+            lista.add(new Pair<String, Integer> (data.getJSONArray("info").getJSONObject(i).getString("vehicle"), data.getJSONArray("info").getJSONObject(i).getInt("class")));
         return new SetContClassEvent(
                 data.getInt("time"),
                 lista

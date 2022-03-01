@@ -20,7 +20,7 @@ public class NewVehicleEventBuilder extends Builder<Event>{
         return new NewVehicleEvent(
                 data.getInt("time"),
                 data.getString("id"),
-                data.getInt("maxSpeed"),
+                data.getInt("maxspeed"),
                 data.getInt("class"),
                 lista
         );

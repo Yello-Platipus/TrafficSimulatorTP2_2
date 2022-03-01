@@ -10,9 +10,9 @@ import java.util.List;
 
 public abstract class Road extends SimulatedObject{
 
-    private Junction srcJunc;
-    private Junction destJunc;
-    private int length;
+	protected Junction srcJunc;
+	protected Junction destJunc;
+	protected int length;
     protected int maxSpeed;
     protected int actLimit;
     protected int contaminationLimit;
@@ -21,7 +21,7 @@ public abstract class Road extends SimulatedObject{
     private List<Vehicle> vehiclesInRoad;
     private Comparator<Vehicle> c;
 
-    Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
+    public Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
 
         if(maxSpeed < 0){

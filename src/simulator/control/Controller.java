@@ -24,13 +24,17 @@ public class Controller {
         ef = eventsFactory;
     }
 
-    public void loadEvents(InputStream in){
-        Event e;
-        JSONObject jo = new JSONObject(new JSONTokener(in));
-        e = ef.createInstance(jo);
-        simulator.addEvent(e);
-        //?¿¿¿?¿¿?¿?¿?¿?¿Este método debe lanzar una excepción si la entrada JSON no encaja con la de arriba
-    }
+    public void loadEvents(InputStream in){         
+    	JSONObject jo = new JSONObject(new JSONTokener(in));      
+    	if(jo.has("events")) {
+	    	JSONArray ja = jo.getJSONArray("events");         
+	    	for(int i = 0; i < ja.length(); i++){             
+				simulator.addEvent(ef.createInstance(ja.getJSONObject(i)));         
+			}     
+    	}
+    	else
+    		throw new IllegalArgumentException("JSON Object doesnt have \"events\" key");
+	} 
     public void run(int n, OutputStream out){
         JSONObject jo= new JSONObject();
         JSONArray jsonArray = new JSONArray();

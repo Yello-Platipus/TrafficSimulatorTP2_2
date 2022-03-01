@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,14 @@ public class RoadMap {
     private Map<String, Road> roadMap;
     private Map<String, Vehicle> vehicleMap;
 
-    protected RoadMap(){}
+    protected RoadMap(){
+    	junctionList = new ArrayList<Junction>();
+    	roadList = new ArrayList<Road>();
+    	vehicleList = new ArrayList<Vehicle>();
+    	junctionMap = new HashMap<String, Junction>();
+    	roadMap = new HashMap<String, Road>();
+    	vehicleMap = new HashMap<String, Vehicle>();
+    }
 
     private boolean checkVehicleValidity(Vehicle v){
         boolean valid = true;
@@ -29,17 +37,16 @@ public class RoadMap {
     }
 
     public void addJunction(Junction j){
-        for(Junction cosa : junctionList){
-            if(cosa.getId() == j.getId())
+        for(Junction cosa : junctionList)
+            if(cosa.getId().equals(j.getId()))
                 throw new IllegalArgumentException("Junction already in the list");
-        }
         junctionList.add(j);
         junctionMap.put(j.getId(), j);
     }
 
     public void addRoad(Road r){
         for(Road cosa : roadList){
-            if(cosa.getId() == r.getId())
+            if(cosa.getId().equals(r.getId()))
                 throw new IllegalArgumentException("Road already in the list");
             else if(cosa.getDest() == r.getDest() && cosa.getSrc() == r.getSrc())
                 throw new IllegalArgumentException("Road connects two already connected Junctions");
@@ -49,10 +56,9 @@ public class RoadMap {
     }
 
     public void addVehicle(Vehicle v){
-        for(Vehicle cosa : vehicleList){
-            if(cosa.getId() == v.getId())
+        for(Vehicle cosa : vehicleList)
+            if(cosa.getId().equals(v.getId()))
                 throw new IllegalArgumentException("Vehicle already in the list");
-        }
         if(!checkVehicleValidity(v))
             throw new IllegalArgumentException("Itinerary is not connected");
         vehicleList.add(v);
