@@ -114,7 +114,7 @@ public class RoadMap {
         }
 
         roadMap.put("junctions",arrayJunc);
-        roadMap.put("road",arrayRoad);
+        roadMap.put("roads",arrayRoad);
         roadMap.put("vehicles",arrayVeh);
 
         return  roadMap;

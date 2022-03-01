@@ -35,7 +35,6 @@ public class TrafficSimulator {
     }
     public void addEvent(Event e){
         eventList.add(e);
-        eventList.sort(c);
     }
     
     public void advance(){
@@ -44,6 +43,7 @@ public class TrafficSimulator {
             if(eventList.get(i).getTime() == simulationTime){
                 eventList.get(i).execute(roadMap);
                 eventList.remove(i);
+                i--;
             }
         }
         for(int i = 0; i < roadMap.getJunctions().size(); i++){

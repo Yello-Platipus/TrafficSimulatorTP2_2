@@ -3,7 +3,7 @@ package simulator.factories;
 
 import org.json.JSONObject;
 import simulator.model.Event;
-import simulator.model.NewCityRoadEvent;
+import simulator.model.NewInterCityRoadEvent;
 import simulator.model.Weather;
 
 public class NewInterCityRoadEventBuilder extends Builder<Event>{
@@ -13,7 +13,7 @@ public class NewInterCityRoadEventBuilder extends Builder<Event>{
 
     @Override
     protected Event createTheInstance(JSONObject data) {
-        return new NewCityRoadEvent(
+        return new NewInterCityRoadEvent(
                 data.getInt("time"),
                 data.getString("id"),
                 data.getString("src"),

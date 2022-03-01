@@ -39,7 +39,9 @@ public abstract class Road extends SimulatedObject{
         this.maxSpeed = maxSpeed;
         this.actLimit = maxSpeed;
         this.srcJunc = srcJunc;
+        srcJunc.addOutGoingRoad(this);
         this.destJunc = destJunc;
+        destJunc.addIncomingRoad(this);
         contaminationLimit = contLimit;
         this.length = length;
         this.weather = weather;
