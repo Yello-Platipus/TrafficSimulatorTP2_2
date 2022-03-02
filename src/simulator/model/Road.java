@@ -1,5 +1,6 @@
 package simulator.model;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
 import javax.print.attribute.standard.JobHoldUntil;
@@ -39,9 +40,7 @@ public abstract class Road extends SimulatedObject{
         this.maxSpeed = maxSpeed;
         this.actLimit = maxSpeed;
         this.srcJunc = srcJunc;
-        srcJunc.addOutGoingRoad(this);
         this.destJunc = destJunc;
-        destJunc.addIncomingRoad(this);
         contaminationLimit = contLimit;
         this.length = length;
         this.weather = weather;
@@ -58,6 +57,8 @@ public abstract class Road extends SimulatedObject{
             }
         };
         vehiclesInRoad = new SortedArrayList<Vehicle>(c);
+        srcJunc.addOutGoingRoad(this);
+        destJunc.addIncomingRoad(this);
     }
 
     @Override
@@ -129,7 +130,11 @@ public abstract class Road extends SimulatedObject{
         road.put("speedlimit",actLimit);
         road.put("weather",weather.toString());
         road.put("co2",totalContamination);
-        road.put("vehicles",vehiclesInRoad);
+        JSONArray ja = new JSONArray();
+        for(Vehicle v : vehiclesInRoad) {
+        	ja.put(v.getId());
+        }
+        road.put("vehicles",ja);
         return road;
     }
     public int getLength(){

@@ -71,6 +71,7 @@ public class Main {
 		cmdLineOptions.addOption(
 				Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
+		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Number of ticks").build());
 
 		return cmdLineOptions;
 	}
@@ -95,7 +96,6 @@ public class Main {
 	}
 
 	private static void parseTicksOption(CommandLine line) throws ParseException {
-		// ?¿?¿?¿?¿?¿?¿?¿
 		ticks = Integer.valueOf(line.getOptionValue("t"));
 	}
 

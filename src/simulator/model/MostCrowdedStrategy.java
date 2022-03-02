@@ -7,12 +7,27 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
     private int ticks;
 
     private int searchMaxLength(List<Road> roads, List<List<Vehicle>> qs, int startingPoint){
-        int max = qs.get(startingPoint).size();
-        for(int i = 1; i < roads.size(); i++){
-            if(qs.get((startingPoint + i) % roads.size()).size() > max)
+        int max = qs.get((startingPoint + 1) % roads.size()).size();
+        int index = (startingPoint + 1) % roads.size();
+        for(int i = 0; i < roads.size(); i++){
+            if(qs.get((startingPoint + i) % roads.size()).size() > max) {
                 max = qs.get((startingPoint + i) % roads.size()).size();
+                index = (startingPoint + i) % roads.size();
+            }
         }
-        return max;
+        return index;
+    }
+    
+    private int searchMaxLength(List<Road> roads, List<List<Vehicle>> qs){
+    	int max = qs.get(0).size();
+        int index = 0;
+        for(int i = 0; i < roads.size(); i++){
+            if(qs.get(i).size() > max) {
+                max = qs.get(i).size();
+                index = (i) % roads.size();
+            }
+        }
+        return index;
     }
 
     public MostCrowdedStrategy(int timeSlot){
@@ -24,7 +39,7 @@ public class MostCrowdedStrategy implements LightSwitchingStrategy {
         if(roads.isEmpty())
             return -1;
         else if (currGreen == -1)
-            return searchMaxLength(roads, qs, 0);
+            return searchMaxLength(roads, qs);
         else if(currTime - lastSwitchingTime < ticks)
             return currGreen;
         else

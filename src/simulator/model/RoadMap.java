@@ -29,7 +29,7 @@ public class RoadMap {
     private boolean checkVehicleValidity(Vehicle v){
         boolean valid = true;
         int i = 0;
-        while(valid && i < v.getItinerary().size()){
+        while(valid && i < v.getItinerary().size() - 1){
             valid = v.getItinerary().get(i).connectedTo(v.getItinerary().get(i + 1));
             i++;
         }

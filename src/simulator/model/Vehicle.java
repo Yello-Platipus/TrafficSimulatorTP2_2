@@ -21,7 +21,7 @@ public class Vehicle extends SimulatedObject{
 
     Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) {
         super(id);
-        if(maxSpeed < 0){
+        if(maxSpeed < 1){
             throw new IllegalArgumentException("ERROR: Negative max speed ");
         }
         if(contClass < 0 || contClass > 10){
@@ -48,16 +48,20 @@ public class Vehicle extends SimulatedObject{
                 itinerary.get(itineraryIndex + 1).enter(this);
                 status = VehicleStatus.WAITING;
             }
+            distance += location - prevLocation;
         }
     }
+    
     void moveToNextRoad(){
         if(status != VehicleStatus.PENDING && status != VehicleStatus.WAITING)
             throw new IllegalArgumentException("ERROR: Vehicle is moving");
         if(status != VehicleStatus.PENDING)
             currentRoad.exit(this);
         if(status == VehicleStatus.PENDING) {
-            itinerary.get(0).enter(this);
+            itinerary.get(0).roadTo(itinerary.get(1)).enter(this);
             itineraryIndex = 0;
+            status = VehicleStatus.TRAVELING;
+            currentRoad = itinerary.get(0).roadTo(itinerary.get(1));
         }
         else if(itineraryIndex != itinerary.size() - 1) {
             itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
@@ -75,14 +79,17 @@ public class Vehicle extends SimulatedObject{
         vehicle.put("co2",totalContaminated);
         vehicle.put("class",contaminationClass);
         vehicle.put("status",status.toString());
-        vehicle.put("road",currentRoad);
-        vehicle.put("location",location);
+        if(status == VehicleStatus.TRAVELING || status == VehicleStatus.WAITING ) {
+        	vehicle.put("location",location);
+            vehicle.put("road",currentRoad);
+        }
         return vehicle;
     }
 
     protected void setSpeed(int s){
         if (s >= 0) {
-            currentSpeed = Math.min(maxSpeed,s);
+        	if(status == VehicleStatus.TRAVELING)
+        		currentSpeed = Math.min(maxSpeed,s);
         }
         else  {
             throw new IllegalArgumentException("ERROR: Velocidad menor que 0");
