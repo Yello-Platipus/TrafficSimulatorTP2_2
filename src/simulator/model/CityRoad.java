@@ -17,8 +17,6 @@ public class CityRoad extends Road{
                 break;
             default:
                 atmCondition = 2;
-
-
         }
         totalContamination = totalContamination - atmCondition;
         totalContamination = Math.max(totalContamination,0);

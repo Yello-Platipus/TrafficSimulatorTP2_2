@@ -25,11 +25,14 @@ public abstract class Road extends SimulatedObject{
     public Road(String id, Junction srcJunc, Junction destJunc, int maxSpeed, int contLimit, int length, Weather weather) {
         super(id);
 
-        if(maxSpeed < 0){
-            throw new IllegalArgumentException("ERROR: Negative max speed ");
+        if(maxSpeed <= 0){
+            throw new IllegalArgumentException("ERROR: Non positive max speed ");
         }
         if(contLimit < 0){
             throw new IllegalArgumentException("ERROR: Negative contamination limit");
+        }
+        if(length <= 0) {
+        	throw new IllegalArgumentException("ERROR: Non positive length");
         }
         if(srcJunc == null || destJunc == null){
             throw new IllegalArgumentException("ERROR: Juction = null");
