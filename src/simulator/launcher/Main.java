@@ -23,7 +23,7 @@ import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
 
 public class Main {
-
+ 	//a
 	private final static Integer _timeLimitDefaultValue = 10;
 	private static Integer ticks= _timeLimitDefaultValue;
 	private static String _inFile = null;
