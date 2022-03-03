@@ -51,23 +51,21 @@ public class Vehicle extends SimulatedObject{
             distance += location - prevLocation;
         }
     }
-    
+
     void moveToNextRoad(){
         if(status != VehicleStatus.PENDING && status != VehicleStatus.WAITING)
             throw new IllegalArgumentException("ERROR: Vehicle is moving");
         if(status != VehicleStatus.PENDING)
             currentRoad.exit(this);
-        if(status == VehicleStatus.PENDING) {
-            itinerary.get(0).roadTo(itinerary.get(1)).enter(this);
-            itineraryIndex = 0;
+        itineraryIndex++;
+
+        if(itineraryIndex < itinerary.size() - 1 ) {
+            itinerary.get(itineraryIndex-1).roadTo(itinerary.get(itineraryIndex )).enter(this);
+            distance = 0;
             status = VehicleStatus.TRAVELING;
-            currentRoad = itinerary.get(0).roadTo(itinerary.get(1));
         }
-        else if(itineraryIndex != itinerary.size() - 1) {
-            itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
-            itineraryIndex++;
-        }
-        distance = 0;
+        else
+            status = VehicleStatus.ARRIVED;
     }
 
     @Override

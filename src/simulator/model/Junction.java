@@ -58,9 +58,6 @@ public class Junction extends SimulatedObject{
             queueList.get(queueList.indexOf(v.getRoad())).add(v);
             queueMap.get(v.getRoad()).add(v);
         }
-        if(v.getStatus()== VehicleStatus.PENDING) {
-        	
-        }
     }
 
     Road roadTo(Junction j){
