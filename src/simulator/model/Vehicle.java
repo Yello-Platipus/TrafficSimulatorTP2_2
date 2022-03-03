@@ -66,9 +66,10 @@ public class Vehicle extends SimulatedObject{
             currentRoad = itinerary.get(0).roadTo(itinerary.get(1));
             itineraryIndex++;
         }
-        else if(itineraryIndex != itinerary.size() - 1) {
+        else if(itineraryIndex < itinerary.size() - 1) {
             location = 0;
             currentSpeed = 0;
+            
             itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
             itineraryIndex++;
         }
