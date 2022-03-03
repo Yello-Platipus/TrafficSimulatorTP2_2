@@ -45,7 +45,7 @@ public class Vehicle extends SimulatedObject{
             totalContaminated += (location - prevLocation) * contaminationClass;
             currentRoad.addContamination((location - prevLocation) * contaminationClass);
             if(location >= currentRoad.getLength()){
-                itinerary.get(itineraryIndex + 1).enter(this);
+                itinerary.get(itineraryIndex).enter(this);
                 status = VehicleStatus.WAITING;
             }
             distance += location - prevLocation;
@@ -57,15 +57,25 @@ public class Vehicle extends SimulatedObject{
             throw new IllegalArgumentException("ERROR: Vehicle is moving");
         if(status != VehicleStatus.PENDING)
             currentRoad.exit(this);
-        itineraryIndex++;
-
-        if(itineraryIndex < itinerary.size() - 1 ) {
-            itinerary.get(itineraryIndex-1).roadTo(itinerary.get(itineraryIndex )).enter(this);
+        if(status == VehicleStatus.PENDING) {
+            itinerary.get(0).roadTo(itinerary.get(1)).enter(this);
+            itineraryIndex = 0;
             distance = 0;
+            location=0;
             status = VehicleStatus.TRAVELING;
+            currentRoad = itinerary.get(0).roadTo(itinerary.get(1));
+            itineraryIndex++;
         }
-        else
+        else if(itineraryIndex != itinerary.size() - 1) {
+            location = 0;
+            currentSpeed = 0;
+            itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
+            itineraryIndex++;
+        }
+        else {
             status = VehicleStatus.ARRIVED;
+        }
+
     }
 
     @Override
