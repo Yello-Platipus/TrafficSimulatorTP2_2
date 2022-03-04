@@ -47,6 +47,7 @@ public class Vehicle extends SimulatedObject{
             if(location >= currentRoad.getLength()){
                 itinerary.get(itineraryIndex).enter(this);
                 status = VehicleStatus.WAITING;
+                currentSpeed = 0;
             }
             distance += location - prevLocation;
         }

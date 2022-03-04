@@ -56,7 +56,6 @@ public class Junction extends SimulatedObject{
     void enter(Vehicle v){
         if(!incomingRoadList.isEmpty()) {
             queueList.get(incomingRoadList.indexOf(v.getRoad())).add(v);
-            queueMap.get(v.getRoad()).add(v);
         }
     }
 
