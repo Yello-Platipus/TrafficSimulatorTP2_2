@@ -67,6 +67,6 @@ public class TrafficSimulator {
         trafficSimulatorReport.put("state",roadMap.report());
 
 
-        return  trafficSimulatorReport;
+        return  new JSONObject (trafficSimulatorReport.toString());
     }
 }

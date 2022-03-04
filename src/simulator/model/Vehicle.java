@@ -85,7 +85,7 @@ public class Vehicle extends SimulatedObject{
         	vehicle.put("location",location);
             vehicle.put("road",currentRoad);
         }
-        return vehicle;
+        return new JSONObject (vehicle.toString());
     }
 
     protected void setSpeed(int s){
