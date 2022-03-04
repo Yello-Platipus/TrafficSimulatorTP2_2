@@ -72,6 +72,8 @@ public class Vehicle extends SimulatedObject{
             currentSpeed = 0;
             
             itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
+            //POSIBLE ERROR
+            currentRoad = itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1));
             itineraryIndex++;
         }
         else {
