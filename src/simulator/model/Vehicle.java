@@ -33,7 +33,7 @@ public class Vehicle extends SimulatedObject{
         this.maxSpeed = maxSpeed;
         contaminationClass = contClass;
         this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
-        itineraryIndex = -1;
+        itineraryIndex = 0;
         status = VehicleStatus.PENDING;
     }
 // Excepciones que vamos a usar : illegal argument, run time exception, null pointer exception
@@ -53,28 +53,18 @@ public class Vehicle extends SimulatedObject{
         }
     }
 
-    void moveToNextRoad(){
+    void moveToNextRoad(){//PUNTO DE INFLEXION
         if(status != VehicleStatus.PENDING && status != VehicleStatus.WAITING)
             throw new IllegalArgumentException("ERROR: Vehicle is moving");
         if(status != VehicleStatus.PENDING)
             currentRoad.exit(this);
-        if(status == VehicleStatus.PENDING) {
-            itinerary.get(0).roadTo(itinerary.get(1)).enter(this);
-            itineraryIndex = 0;
-            distance = 0;
-            location=0;
-            status = VehicleStatus.TRAVELING;
-            currentRoad = itinerary.get(0).roadTo(itinerary.get(1));
-            itineraryIndex++;
-        }
-        else if(itineraryIndex < itinerary.size() - 1) {
+        itineraryIndex++;
+
+        if(itineraryIndex < itinerary.size()) {
+            currentRoad = itinerary.get(itineraryIndex - 1).roadTo(itinerary.get(itineraryIndex));
             location = 0;
-            currentSpeed = 0;
-            
-            itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1)).enter(this);
-            //POSIBLE ERROR
-            currentRoad = itinerary.get(itineraryIndex).roadTo(itinerary.get(itineraryIndex + 1));
-            itineraryIndex++;
+            currentRoad.enter(this);
+            status = VehicleStatus.TRAVELING;
         }
         else {
             status = VehicleStatus.ARRIVED;

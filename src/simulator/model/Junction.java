@@ -40,9 +40,10 @@ public class Junction extends SimulatedObject{
     void addIncomingRoad(Road r){
         if(r.getDest() != this)
             throw new IllegalArgumentException("The road doesn't lead to this junction");
+        List<Vehicle> q = new LinkedList<Vehicle>();
         incomingRoadList.add(r);
-        queueList.add(new LinkedList<Vehicle>());
-        queueMap.put(r, queueList.get(queueList.size() - 1));
+        queueList.add(q);
+        queueMap.put(r, q);
     }
 
     void addOutGoingRoad(Road r){
@@ -54,9 +55,7 @@ public class Junction extends SimulatedObject{
     }
 
     void enter(Vehicle v){
-        if(!incomingRoadList.isEmpty()) {
-            queueList.get(incomingRoadList.indexOf(v.getRoad())).add(v);
-        }
+        queueMap.get(v.getRoad()).add(v);
     }
 
     Road roadTo(Junction j){
@@ -66,14 +65,15 @@ public class Junction extends SimulatedObject{
     @Override
     void advance(int time) {
         // Mover coches
-    	if(greenInd != -1) {
-	        List<Vehicle> aux = ds.dequeue(queueList.get(greenInd));
-	        for(Vehicle v : aux){
-	            queueList.get(greenInd).remove(v);
-	            queueMap.get(incomingRoadList.get(greenInd)).remove(v);
-	            v.moveToNextRoad();
-	        }
-    	}
+        if(greenInd != -1) {
+            List<Vehicle> aux = ds.dequeue(queueList.get(greenInd));
+            for(Vehicle v : aux){
+                queueList.get(greenInd).remove(v);
+                queueMap.get(incomingRoadList.get(greenInd)).remove(v);
+                v.moveToNextRoad();
+
+            }
+        }
         // Cambio de semáforo
         int newGreen = lss.chooseNextGreen(incomingRoadList, queueList, greenInd, lastSwitchingTime, time);
         if(newGreen != greenInd)
