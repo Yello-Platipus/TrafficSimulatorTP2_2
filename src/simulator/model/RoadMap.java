@@ -30,7 +30,7 @@ public class RoadMap {
         boolean valid = true;
         int i = 0;
         while(valid && i < v.getItinerary().size() - 1){
-            valid = v.getItinerary().get(i).connectedTo(v.getItinerary().get(i + 1));
+            valid = v.getItinerary().get(i).roadTo(v.getItinerary().get(i + 1)) != null;
             i++;
         }
         return valid;

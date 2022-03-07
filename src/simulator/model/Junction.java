@@ -28,9 +28,9 @@ public class Junction extends SimulatedObject{
             lss = lsStrategy;
             ds = dqStrategy;
         }
-        else{
+        else
             throw new IllegalArgumentException("Datos introducidos en la Junction erroneos");
-        }
+        
         incomingRoadList = new ArrayList<Road>();
         outGoingRoadMap = new HashMap<Junction, Road>();
         queueList = new ArrayList<List<Vehicle>>();
@@ -100,7 +100,5 @@ public class Junction extends SimulatedObject{
         return road;
     }
 
-    public boolean connectedTo(Junction j){
-        return outGoingRoadMap.containsKey(j);
-    }
+
 }

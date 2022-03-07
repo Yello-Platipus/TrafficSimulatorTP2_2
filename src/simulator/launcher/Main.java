@@ -125,7 +125,7 @@ public class Main {
 	private static void startBatchMode() throws IOException {
 		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);
 		controlador.loadEvents(new FileInputStream(_inFile));
-		// ? xd// ? xd// ? xd
+		
 		if(_outFile != null){
 			controlador.run(ticks,new FileOutputStream(_outFile));
 		}

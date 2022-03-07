@@ -44,7 +44,7 @@ public class Controller {
             jsonArray.put(simulator.report());
         }
         jo.put("states",jsonArray);
-        ps.print(jo.toString(3));//No le hagas mucho caso a ese 3
+        ps.print(jo.toString(3));
     }
     public void reset(){
         simulator.reset();

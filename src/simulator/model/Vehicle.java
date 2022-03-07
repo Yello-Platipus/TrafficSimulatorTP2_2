@@ -21,15 +21,15 @@ public class Vehicle extends SimulatedObject{
 
     Vehicle(String id, int maxSpeed, int contClass, List<Junction> itinerary) {
         super(id);
-        if(maxSpeed < 1){
+        if(maxSpeed < 1)
             throw new IllegalArgumentException("ERROR: Negative max speed ");
-        }
-        if(contClass < 0 || contClass > 10){
+        
+        if(contClass < 0 || contClass > 10)
             throw new IllegalArgumentException("ERROR: Contamination class out of bounds");
-        }
-        if(itinerary.size() < 2){
+        
+        if(itinerary.size() < 2)
             throw new IllegalArgumentException("ERROR: Itinerary size lower that 2");
-        }
+        
         this.maxSpeed = maxSpeed;
         contaminationClass = contClass;
         this.itinerary = Collections.unmodifiableList(new ArrayList<>(itinerary));
@@ -53,23 +53,22 @@ public class Vehicle extends SimulatedObject{
         }
     }
 
-    void moveToNextRoad(){//PUNTO DE INFLEXION
+    void moveToNextRoad(){//FELISIDÁ
+
+        itineraryIndex++;
+
         if(status != VehicleStatus.PENDING && status != VehicleStatus.WAITING)
             throw new IllegalArgumentException("ERROR: Vehicle is moving");
         if(status != VehicleStatus.PENDING)
             currentRoad.exit(this);
-        itineraryIndex++;
-
         if(itineraryIndex < itinerary.size()) {
             currentRoad = itinerary.get(itineraryIndex - 1).roadTo(itinerary.get(itineraryIndex));
             location = 0;
             currentRoad.enter(this);
             status = VehicleStatus.TRAVELING;
         }
-        else {
+        else 
             status = VehicleStatus.ARRIVED;
-        }
-
     }
 
     @Override
@@ -93,19 +92,14 @@ public class Vehicle extends SimulatedObject{
         	if(status == VehicleStatus.TRAVELING)
         		currentSpeed = Math.min(maxSpeed,s);
         }
-        else  {
+        else  
             throw new IllegalArgumentException("ERROR: Velocidad menor que 0");
-        }
-
     }
     protected void setContClass(int c){
-        if (0 <= c && c <= 10) {
+        if (0 <= c && c <= 10) 
             contaminationClass = c;
-        }
-        else {
+        else 
             throw new IllegalArgumentException("ERROR: Contaminacion mayor que 10 o menor que 0");
-        }
-
     }
     public int getLocation(){
         return location;
