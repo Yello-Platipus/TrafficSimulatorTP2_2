@@ -7,7 +7,7 @@ import simulator.misc.SortedArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TrafficSimulator {
+public class TrafficSimulator implements Observable{
     private RoadMap roadMap;
     private List<Event> eventList;
     private int simulationTime = 0;
@@ -68,5 +68,43 @@ public class TrafficSimulator {
 
 
         return  new JSONObject (trafficSimulatorReport.toString());
+    }
+
+    //============================================================================
+    //NUEVO
+    //============================================================================
+
+    public void onAdvanceStart(){//TODO
+
+    }
+
+    public void onAdvanceEnd(){//TODO
+
+    }
+
+    public void onEventAdded(){//TODO
+
+    }
+
+    public void onReset(){//TODO
+
+    }
+
+    public void onRegister(){//TODO
+
+    }
+
+    public void onError(){//TODO
+
+    }
+
+    @Override
+    public void addObserver(Object o) {//TODO
+
+    }
+
+    @Override
+    public void removeObserver(Object o) {//TODO
+
     }
 }

@@ -22,8 +22,6 @@ public class SetWeatherEvent extends Event{
             catch (Exception e){
                 throw new IllegalArgumentException("The road does not exists (SetWeatherEvent");
             }
-
-
         }
     }
 }
