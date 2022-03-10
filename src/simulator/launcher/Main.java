@@ -28,6 +28,7 @@ public class Main {
 	private static Integer ticks= _timeLimitDefaultValue;
 	private static String _inFile = null;
 	private static String _outFile = null;
+	private static String _mode = null;
 	private static Factory<Event> _eventsFactory = null;
 
 	private static void parseArgs(String[] args) {
@@ -41,9 +42,10 @@ public class Main {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine line = parser.parse(cmdLineOptions, args);
+			parseModeOption(line);
 			parseHelpOption(line, cmdLineOptions);
-			parseInFileOption(line);
-			parseOutFileOption(line);
+			parseInFileOption(line);//TODO SI m PUEDE ESTAR O NO ESTAR
+			parseOutFileOption(line);//TODO IGNORAR SI m
 			parseTicksOption(line);
 
 			// if there are some remaining arguments, then something wrong is
@@ -72,6 +74,7 @@ public class Main {
 				Option.builder("o").longOpt("output").hasArg().desc("Output file, where reports are written.").build());
 		cmdLineOptions.addOption(Option.builder("h").longOpt("help").desc("Print this message").build());
 		cmdLineOptions.addOption(Option.builder("t").longOpt("ticks").hasArg().desc("Number of ticks").build());
+		cmdLineOptions.addOption(Option.builder("m").longOpt("mode").hasArg().desc("Mode of execution").build());
 
 		return cmdLineOptions;
 	}
@@ -97,6 +100,10 @@ public class Main {
 
 	private static void parseTicksOption(CommandLine line) throws ParseException {
 		ticks = Integer.valueOf(line.getOptionValue("t"));
+	}
+
+	private static void parseModeOption(CommandLine line) throws ParseException {
+		_mode = line.getOptionValue("m");
 	}
 
 	private static void initFactories() {
