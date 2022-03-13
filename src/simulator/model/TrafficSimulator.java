@@ -4,15 +4,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import simulator.misc.SortedArrayList;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class TrafficSimulator implements Observable{
+public class TrafficSimulator implements Observable<TrafficSimObserver>{
     private RoadMap roadMap;
     private List<Event> eventList;
     private int simulationTime = 0;
     private Comparator<Event> c;
-
+    private List<TrafficSimObserver> trafficSimObserverList;
+    //TODO ON ERROR
     public TrafficSimulator(){
         roadMap = new RoadMap();
 
@@ -35,10 +37,16 @@ public class TrafficSimulator implements Observable{
     }
     public void addEvent(Event e){
         eventList.add(e);
+        for(TrafficSimObserver o : trafficSimObserverList){
+            o.onEventAdded(roadMap,eventList,e,simulationTime);
+        }
     }
     
     public void advance(){
         simulationTime++;
+        for(TrafficSimObserver o : trafficSimObserverList){
+            o.onAdvanceStart(roadMap,eventList,simulationTime);
+        }
         for(int i = 0; i < eventList.size(); i++){
             if(eventList.get(i).getTime() == simulationTime){
                 eventList.get(i).execute(roadMap);
@@ -52,12 +60,18 @@ public class TrafficSimulator implements Observable{
         for(int i = 0; i < roadMap.getRoads().size(); i++){
             roadMap.getRoads().get(i).advance(simulationTime);
         }
+        for(TrafficSimObserver o : trafficSimObserverList){
+            o.onAdvanceEnd(roadMap,eventList,simulationTime);
+        }
     }
     
     public void reset(){
         roadMap.reset();
         eventList.clear();
         simulationTime = 0;
+        for(TrafficSimObserver o : trafficSimObserverList){
+            o.onReset(roadMap,eventList,simulationTime);
+        }
     }
 
     public JSONObject report(){
@@ -70,41 +84,17 @@ public class TrafficSimulator implements Observable{
         return  new JSONObject (trafficSimulatorReport.toString());
     }
 
-    //============================================================================
-    //NUEVO
-    //============================================================================
 
-    public void onAdvanceStart(){//TODO
-
-    }
-
-    public void onAdvanceEnd(){//TODO
-
-    }
-
-    public void onEventAdded(){//TODO
-
-    }
-
-    public void onReset(){//TODO
-
-    }
-
-    public void onRegister(){//TODO
-
-    }
-
-    public void onError(){//TODO
-
+    @Override
+    public void addObserver(TrafficSimObserver o) {
+        trafficSimObserverList.add(o);
+        for(TrafficSimObserver obs : trafficSimObserverList){
+            obs.onRegister(roadMap,eventList,simulationTime);
+        }
     }
 
     @Override
-    public void addObserver(Object o) {//TODO
-
-    }
-
-    @Override
-    public void removeObserver(Object o) {//TODO
-
+    public void removeObserver(TrafficSimObserver o) {
+        trafficSimObserverList.remove(o);
     }
 }
