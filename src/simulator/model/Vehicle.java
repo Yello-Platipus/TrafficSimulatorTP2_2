@@ -104,6 +104,9 @@ public class Vehicle extends SimulatedObject{
     public int getLocation(){
         return location;
     }
+    public int getDistance(){
+        return distance;
+    }
     public int getSpeed(){
         return currentSpeed;
     }

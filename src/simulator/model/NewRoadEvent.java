@@ -19,4 +19,8 @@ public abstract class NewRoadEvent extends Event{
 
     @Override
     abstract void execute(RoadMap map);
+    public String toString() {
+        return "New Road '" + id + "'";
+    }
+
 }
