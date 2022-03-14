@@ -3,6 +3,7 @@ package simulator.view;
 import simulator.control.Controller;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
@@ -30,7 +31,6 @@ public class MainWindow extends JFrame {
                 createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
         eventsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(eventsView);
-// TODO add other tables
         JPanel vehiclesView =
                 createViewPanel(new JTable(new VehiclesViewTableModel(_ctrl)), "Events");
         vehiclesView.setPreferredSize(new Dimension(500, 200));
@@ -61,6 +61,10 @@ public class MainWindow extends JFrame {
     }
     private JPanel createViewPanel(JComponent c, String title) {
         JPanel p = new JPanel( new BorderLayout() );
+        TitledBorder titulo;
+        p.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        p.setBorder(BorderFactory.createTitledBorder(title));
+
 // TODO add a framed border to p with title
         p.add(new JScrollPane(c));
         return p;

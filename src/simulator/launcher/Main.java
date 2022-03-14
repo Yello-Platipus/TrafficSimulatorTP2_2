@@ -47,9 +47,9 @@ public class Main {
 			CommandLine line = parser.parse(cmdLineOptions, args);
 			parseModeOption(line);
 			parseHelpOption(line, cmdLineOptions);
-			parseInFileOption(line);//TODO SI m PUEDE ESTAR O NO ESTAR
+			parseInFileOption(line);
 
-			parseOutFileOption(line);//TODO IGNORAR SI m
+			parseOutFileOption(line);
 
 			parseTicksOption(line);
 
@@ -109,7 +109,7 @@ public class Main {
 
 	private static void parseTicksOption(CommandLine line) throws ParseException {
 		if(_mode.equals("console")){
-		ticks = Integer.valueOf(line.getOptionValue("t"));
+			ticks = Integer.valueOf(line.getOptionValue("t"));
 		}
 	}
 
@@ -148,7 +148,8 @@ public class Main {
 	private static void startBatchMode() throws IOException {
 		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);
 		controlador.loadEvents(new FileInputStream(_inFile));
-		
+		new MainWindow(controlador);//ª
+
 		if(_outFile != null){
 			controlador.run(ticks,new FileOutputStream(_outFile));
 		}
@@ -164,7 +165,7 @@ public class Main {
 
 		}
 		SwingUtilities.invokeLater(new Runnable() {
-			@Override//totoFeoNTHM
+			@Override
 
 			public void run() {
 				MainWindow aux = new MainWindow(controlador);

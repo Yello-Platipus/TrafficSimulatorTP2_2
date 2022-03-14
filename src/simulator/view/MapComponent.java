@@ -40,8 +40,10 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 	private Image _car;
 
 	MapComponent(Controller ctrl) {
+
 		initGUI();
 		ctrl.addObserver(this);
+
 	}
 
 	private void initGUI() {

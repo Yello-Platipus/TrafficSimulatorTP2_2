@@ -35,10 +35,17 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
             case 0:
                 return junctionList.get(rowIndex).getId();
             case 1:
-                //return junctionList.get(rowIndex);
+                if(junctionList.get(rowIndex).getGreenLightIndex() == -1){
+                    return "NONE";
+                }
+                else{
+                    return junctionList.get(rowIndex).getGreenLightIndex();
+                }
             default:
-                //return roadTo(junctionList.get(rowIndex));
-                return null;
+                return null;//TODO
+
+
+
         }
     }
     @Override
@@ -68,13 +75,13 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-        junctionList = new ArrayList<Junction>();
+
 
     }
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
-
+        junctionList = new ArrayList<Junction>();
     }
 
     @Override
