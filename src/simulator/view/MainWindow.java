@@ -3,6 +3,7 @@ package simulator.view;
 import simulator.control.Controller;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
@@ -27,22 +28,31 @@ public class MainWindow extends JFrame {
         mapsPanel.setLayout(new BoxLayout(mapsPanel, BoxLayout.Y_AXIS));
         viewsPanel.add(mapsPanel);
 // tables
+        JTable eventTable = new JTable(new EventsTableModel(_ctrl));
+        eventTable.setShowGrid(false);
         JPanel eventsView =
-                createViewPanel(new JTable(new EventsTableModel(_ctrl)), "Events");
+                createViewPanel(eventTable, "Events");
         eventsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(eventsView);
+
+        JTable vehicleTable = new JTable(new VehiclesViewTableModel(_ctrl));
+        vehicleTable.setShowGrid(false);
         JPanel vehiclesView =
-                createViewPanel(new JTable(new VehiclesViewTableModel(_ctrl)), "Events");
+                createViewPanel(vehicleTable, "Events");
         vehiclesView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(vehiclesView);
 
+        JTable roadTable = new JTable(new roadsTableModel(_ctrl));
+        roadTable.setShowGrid(false);
         JPanel roadsView =
-                createViewPanel(new JTable(new roadsTableModel(_ctrl)), "Events");
+                createViewPanel(roadTable, "Events");
         roadsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(roadsView);
 
+        JTable juntionTable = new JTable(new junctionsTableModel(_ctrl));
+        juntionTable.setShowGrid(false);
         JPanel junctionsView =
-                createViewPanel(new JTable(new junctionsTableModel(_ctrl)), "Events");
+                createViewPanel(juntionTable, "Events");
         junctionsView.setPreferredSize(new Dimension(500, 200));
         tablesPanel.add(junctionsView);
 // ...
@@ -60,12 +70,9 @@ public class MainWindow extends JFrame {
         this.setVisible(true);
     }
     private JPanel createViewPanel(JComponent c, String title) {
-        JPanel p = new JPanel( new BorderLayout() );
-        TitledBorder titulo;
-        p.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        p.setBorder(BorderFactory.createTitledBorder(title));
-
-// TODO add a framed border to p with title
+        JPanel p = new JPanel(new BorderLayout());
+        Border borde = BorderFactory.createLineBorder(Color.black,2);
+        p.setBorder(BorderFactory.createTitledBorder(borde,title));
         p.add(new JScrollPane(c));
         return p;
     }

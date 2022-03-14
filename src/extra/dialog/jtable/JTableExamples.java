@@ -1,4 +1,4 @@
-package extra.jtable;
+package extra.dialog.jtable;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
