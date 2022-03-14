@@ -100,5 +100,19 @@ public class Junction extends SimulatedObject{
         return road;
     }
 
+    public int getX(){
+        return xCoor;
+    }
 
+    public int getY(){
+        return yCoor;
+    }
+
+    public int getGreenLightIndex(){
+        return greenInd;
+    }
+
+    public List<Road> getInRoads(){
+        return incomingRoadList;
+    }
 }
