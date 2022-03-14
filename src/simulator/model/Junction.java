@@ -113,4 +113,8 @@ public class Junction extends SimulatedObject{
         return incomingRoadList;
     }
 
+    public boolean isGreen(Road r){
+        return incomingRoadList.indexOf(r) == greenInd;
+    }
+
 }
