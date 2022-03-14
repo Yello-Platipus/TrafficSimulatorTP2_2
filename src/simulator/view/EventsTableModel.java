@@ -30,11 +30,12 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
     }
     @Override
     public String getColumnName(int column) {
-        if(column == 0){
-            return "Time";
-        }
-        else{
-            return "Desc.";
+
+        switch (column) {
+            case 0:
+                return "Time";
+            default:
+                return "Desc.";
         }
     }
 
@@ -73,7 +74,8 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-        //TODO
+        this.events = events;
+        this.fireTableDataChanged();
     }
 
     @Override

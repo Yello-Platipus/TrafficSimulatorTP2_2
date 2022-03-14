@@ -29,6 +29,26 @@ public class roadsTableModel extends AbstractTableModel implements TrafficSimObs
     public int getColumnCount() {
         return numeroColumnas;
     }
+    @Override
+    public String getColumnName(int column) {
+
+        switch (column) {
+            case 0:
+                return "Id";
+            case 1:
+                return "Length";
+            case 2:
+                return "Weather";
+            case 3:
+                return "Max.Speed";
+            case 4:
+                return "Speed Limit";
+            case 5:
+                return "Total CO2";
+            default:
+                return "CO2 Limit";
+        }
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -74,6 +94,8 @@ public class roadsTableModel extends AbstractTableModel implements TrafficSimObs
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
+        this.roadList = map.getRoads();
+        this.fireTableDataChanged();
 
     }
 

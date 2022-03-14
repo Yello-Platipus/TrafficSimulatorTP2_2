@@ -14,6 +14,7 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
     private final int numeroColumnas = 3;
 
     public junctionsTableModel(Controller ctrl){
+
         this.ctrl = ctrl;
         ctrl.addObserver(this);
     }
@@ -21,6 +22,7 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
     public int getRowCount() {
         return junctionList.size();
     }
+
 
     @Override
     public int getColumnCount() {
@@ -39,7 +41,18 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
                 return null;
         }
     }
+    @Override
+    public String getColumnName(int column) {
+        switch (column) {
+            case 0:
+                return "Id";
+            case 1:
+                return "Green";
+            default:
+                return "Queues";
 
+        }
+    }
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
@@ -66,7 +79,8 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-
+        this.junctionList = map.getJunctions();
+        this.fireTableDataChanged();
     }
 
     @Override

@@ -21,6 +21,9 @@ import simulator.model.DequeuingStrategy;
 import simulator.model.Event;
 import simulator.model.LightSwitchingStrategy;
 import simulator.model.TrafficSimulator;
+import simulator.view.MainWindow;
+
+import javax.swing.*;
 
 public class Main {
  	//a
@@ -45,7 +48,9 @@ public class Main {
 			parseModeOption(line);
 			parseHelpOption(line, cmdLineOptions);
 			parseInFileOption(line);//TODO SI m PUEDE ESTAR O NO ESTAR
+
 			parseOutFileOption(line);//TODO IGNORAR SI m
+
 			parseTicksOption(line);
 
 			// if there are some remaining arguments, then something wrong is
@@ -88,22 +93,33 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
-		_inFile = line.getOptionValue("i");
-		if (_inFile == null) {
-			throw new ParseException("An events file is missing");
+		if(_mode.equals("console")){
+			_inFile = line.getOptionValue("i");
+			if (_inFile == null) {
+				throw new ParseException("An events file is missing");
+			}
 		}
 	}
 
 	private static void parseOutFileOption(CommandLine line) throws ParseException {
-		_outFile = line.getOptionValue("o");
+		if(_mode.equals("console")){
+			_outFile = line.getOptionValue("o");
+		}
 	}
 
 	private static void parseTicksOption(CommandLine line) throws ParseException {
+		if(_mode.equals("console")){
 		ticks = Integer.valueOf(line.getOptionValue("t"));
+		}
 	}
 
 	private static void parseModeOption(CommandLine line) throws ParseException {
-		_mode = line.getOptionValue("m");
+		if(line.getOptionValue("m") == null){
+			_mode = "gui";
+		}
+		else{
+			_mode = line.getOptionValue("m");
+		}
 	}
 
 	private static void initFactories() {
@@ -141,11 +157,32 @@ public class Main {
 		}
 
 	}
+	private static void startGUIMode() throws IOException {
+		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);
+		if(_inFile != null){
+			controlador.loadEvents(new FileInputStream(_inFile));
 
+		}
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+
+			public void run() {
+				MainWindow aux = new MainWindow(controlador);
+				aux.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+			}
+		});
+
+
+	}
 	private static void start(String[] args) throws IOException {
 		initFactories();
 		parseArgs(args);
-		startBatchMode();
+		if(_mode.equals("gui")){
+			startGUIMode();
+		}
+		else{
+			startBatchMode();
+		}
 	}
 
 	// example command lines:

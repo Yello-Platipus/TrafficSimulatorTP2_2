@@ -31,6 +31,28 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
     public int getColumnCount() {
         return numeroColumnas;
     }
+    @Override
+    public String getColumnName(int column) {
+
+        switch (column) {
+            case 0:
+                return "Id";
+            case 1:
+                return "Location";
+            case 2:
+                return "Itinerary";
+            case 3:
+                return "CO2 Class";
+            case 4:
+                return "Max.Speed";
+            case 5:
+                return "Speed";
+            case 6:
+                return "Total CO2";
+            default:
+                return "Distance";
+        }
+    }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -78,7 +100,8 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-
+        this.vehiclesList = map.getVehicles();
+        this.fireTableDataChanged();
     }
 
     @Override
