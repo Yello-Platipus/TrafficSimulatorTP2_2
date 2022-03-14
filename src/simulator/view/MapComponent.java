@@ -31,7 +31,7 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 
 	private static final Color _BG_COLOR = Color.WHITE;
 	private static final Color _JUNCTION_COLOR = Color.BLUE;
-	private static final Color _JUNCTION_LABEL_COLOR = new Color(0, 200, 170, 255);
+	private static final Color _JUNCTION_LABEL_COLOR = new Color(200, 100, 0);
 	private static final Color _GREEN_LIGHT_COLOR = Color.GREEN;
 	private static final Color _RED_LIGHT_COLOR = Color.RED;
 
@@ -40,10 +40,8 @@ public class MapComponent extends JPanel implements TrafficSimObserver {
 	private Image _car;
 
 	MapComponent(Controller ctrl) {
-
 		initGUI();
 		ctrl.addObserver(this);
-
 	}
 
 	private void initGUI() {
