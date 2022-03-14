@@ -17,6 +17,7 @@ public class roadsTableModel extends AbstractTableModel implements TrafficSimObs
     private final int numeroColumnas = 7;
 
     public roadsTableModel(Controller ctrl){
+        
         this.ctrl = ctrl;
         ctrl.addObserver(this);
     }
