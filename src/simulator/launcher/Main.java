@@ -164,7 +164,7 @@ public class Main {
 
 		}
 		SwingUtilities.invokeLater(new Runnable() {
-			@Override//totoFeo
+			@Override//totoFeoNTHM
 
 			public void run() {
 				MainWindow aux = new MainWindow(controlador);
