@@ -15,13 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.Junction;
-import simulator.model.Road;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
-import simulator.model.Vehicle;
-import simulator.model.VehicleStatus;
+import simulator.model.*;
 
 public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
 
@@ -31,7 +25,7 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
 
     private static final Color _BG_COLOR = Color.WHITE;
     private static final Color _JUNCTION_COLOR = Color.BLUE;
-    private static final Color _JUNCTION_LABEL_COLOR = new Color(0, 200, 170, 255);
+    private static final Color _JUNCTION_LABEL_COLOR = new Color(208,100,4, 255);
     private static final Color _GREEN_LIGHT_COLOR = Color.GREEN;
     private static final Color _RED_LIGHT_COLOR = Color.RED;
 
@@ -72,13 +66,15 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
             drawRoad(g, r);
             drawVehicles(g, r);
             drawJunctions(g, r);
+            drawWeather(g, r);
+            drawIcon(g, r);
         }
     }
 
     private void drawRoad(Graphics g, Road r) {
         int x1 = 50, x2 = getWidth() - 100, y = (_map.getRoads().indexOf(r) + 1) * 50;
         g.setColor(Color.BLACK);
-        g.drawString(r.getId(), 25, y);
+        g.drawString(r.getId(), 15, y);
         g.drawLine(x1, y, x2, y);
     }
 
@@ -108,11 +104,69 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
 
         g.setColor(_JUNCTION_COLOR);
         g.fillOval(x1 - _JRADIUS / 2, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+        g.setColor(_JUNCTION_LABEL_COLOR);
+        g.drawString(r.getSrc().getId(), x1, y - 6);
 
         Color c = r.getDest().isGreen(r) ? _GREEN_LIGHT_COLOR : _RED_LIGHT_COLOR;
 
         g.setColor(c);
         g.fillOval(x2 - _JRADIUS / 2, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
+        g.setColor(_JUNCTION_LABEL_COLOR);
+        g.drawString(r.getDest().getId(), x2, y - 6);
+    }
+
+    private void drawWeather(Graphics g, Road r){
+        int x = getWidth() - 80, y = (_map.getRoads().indexOf(r) + 1) * 50 - 10;
+        Image i;
+        switch(r.getWeather()){
+            case SUNNY:
+                i = loadImage("sun.png");
+                break;
+            case CLOUDY:
+                i = loadImage("cloud.png");
+                break;
+            case RAINY:
+                i = loadImage("rain.png");
+                break;
+            case WINDY:
+                i = loadImage("wind.png");
+                break;
+            case STORM:
+                i = loadImage("storm.png");
+                break;
+            default: //TODO PUEDE DAR ERROR (UNHANDLED EXCEPTION?)
+                throw new IllegalStateException("Unexpected value: " + r.getWeather());
+        }
+        g.drawImage(i, x, y, 32, 32, this);
+    }
+
+    private void drawIcon(Graphics g, Road r){
+        int x = getWidth() - 40, y = (_map.getRoads().indexOf(r) + 1) * 50 - 10;
+        int c = (int) Math.floor(Math.min((double) r.getTotalCO2() / (1.0 + (double) r.getContLimit()), 1.0) / 0.19);
+        Image i;
+        switch(c) {
+            case 0:
+                i = loadImage("cont_0.png");
+                break;
+            case 1:
+                i = loadImage("cont_1.png");
+                break;
+            case 2:
+                i = loadImage("cont_2.png");
+                break;
+            case 3:
+                i = loadImage("cont_3.png");
+                break;
+            case 4:
+                i = loadImage("cont_4.png");
+                break;
+            case 5:
+                i = loadImage("cont_5.png");
+                break;
+            default: //TODO PUEDE DAR ERROR (UNHANDLED EXCEPTION?)
+                throw new IllegalStateException("Unexpected value: " + c);
+        }
+        g.drawImage(i, x, y, 32, 32, this);
     }
 
     // loads an image from a file
