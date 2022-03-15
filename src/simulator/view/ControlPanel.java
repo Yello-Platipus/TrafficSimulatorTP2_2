@@ -30,9 +30,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     private Controller _ctrl;
     public ControlPanel(Controller ctrl) {
         super();
+        _ctrl = ctrl;
+        _ctrl.addObserver(this);
         this.setLayout(new BorderLayout());
         initGUI();
-        _ctrl = ctrl;
         botoncicos();
     }
     private void initGUI(){
@@ -71,6 +72,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         boton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                ChangeCO2ClassDialog pene = new ChangeCO2ClassDialog(_ctrl);
 
             }
         });
