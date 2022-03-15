@@ -18,7 +18,7 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
 
     public VehiclesViewTableModel(Controller ctrl){
         this.ctrl = ctrl;
-        ctrl.addObserver(this);
+        this.ctrl.addObserver(this);
     }
 
     @Override

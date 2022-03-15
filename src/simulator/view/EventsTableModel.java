@@ -16,7 +16,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
     private List<Event> events;
     public EventsTableModel(Controller ctrl){
         this.ctrl = ctrl;
-        ctrl.addObserver(this);
+        this.ctrl.addObserver(this);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class EventsTableModel extends AbstractTableModel implements TrafficSimOb
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
-                return events.get(rowIndex);
+                return events.get(rowIndex).getTime();
             default:
                 return events.get(rowIndex).toString();
         }

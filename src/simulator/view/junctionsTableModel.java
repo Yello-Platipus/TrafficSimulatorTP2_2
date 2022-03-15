@@ -16,7 +16,7 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
     public junctionsTableModel(Controller ctrl){
 
         this.ctrl = ctrl;
-        ctrl.addObserver(this);
+        this.ctrl.addObserver(this);
     }
     @Override
     public int getRowCount() {

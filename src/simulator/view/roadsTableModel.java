@@ -19,7 +19,7 @@ public class roadsTableModel extends AbstractTableModel implements TrafficSimObs
     public roadsTableModel(Controller ctrl){
         
         this.ctrl = ctrl;
-        ctrl.addObserver(this);
+        this.ctrl.addObserver(this);
     }
     @Override
     public int getRowCount() {
