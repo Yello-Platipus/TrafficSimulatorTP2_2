@@ -49,6 +49,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         this.add(toolBar);
         JButton boton1 = new JButton((_file));
         toolBar.add(boton1);
+        toolBar.addSeparator();
         boton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -78,8 +79,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         });
         JButton boton3 = new JButton((_cond));
         toolBar.add(boton3);
+        toolBar.addSeparator();
+
         JButton boton4 = new JButton((_ejec));
         toolBar.add(boton4);
+
         JButton boton5 = new JButton((_stop));
         toolBar.add(boton5);
         JButton boton6 = new JButton((_exit));
