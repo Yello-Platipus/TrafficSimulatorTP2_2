@@ -87,7 +87,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         JButton boton5 = new JButton((_stop));
         toolBar.add(boton5);
         JButton boton6 = new JButton((_exit));
-        toolBar.add(new JSeparator());
+        toolBar.add(new JSeparator(SwingConstants.VERTICAL));
         toolBar.add(boton6);
         boton6.addActionListener(new ActionListener() {
             @Override
