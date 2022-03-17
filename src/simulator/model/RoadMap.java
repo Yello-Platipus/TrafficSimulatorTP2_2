@@ -120,4 +120,11 @@ public class RoadMap {
         return  roadMap;
     }
 
+    public Road[] getRoadArray(){
+        Road[] ret = new Road[roadList.size()];
+        for(int i = 0; i < roadList.size(); i++)
+            ret[i] = roadList.get(i);
+        return ret;
+    }
+
 }

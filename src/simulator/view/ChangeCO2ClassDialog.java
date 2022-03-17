@@ -94,7 +94,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
         List<Pair<String,Integer>> listPar = new ArrayList<>();
         Pair<String,Integer> par = new Pair<>(vehiculo.getId(),CO2);
         listPar.add(par);
-        ctrl.addEvent(new SetContClassEvent(ticksActuales+ticks,listPar));
+        ctrl.addEvent(new SetContClassEvent(ticksActuales + ticks,listPar));
 
     }
 
