@@ -23,7 +23,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
 
     public ChangeCO2ClassDialog(Controller ctrl) {
         super((JFrame) null,"Change CO2 Class",true);
-        this.ctrl = ctrl;
+        this.ctrl = ctrl;//si
         this.setLayout(new BorderLayout());
         JTextArea text = new JTextArea("Schedule an event to change the CO2 class of a vehicle after a given number of \nsimulation ticks from now.\n");
         text.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
