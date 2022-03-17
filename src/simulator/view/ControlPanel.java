@@ -73,12 +73,17 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         boton2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ChangeCO2ClassDialog pene = new ChangeCO2ClassDialog(_ctrl);
-
+                ChangeCO2ClassDialog c = new ChangeCO2ClassDialog(_ctrl);
             }
         });
         JButton boton3 = new JButton((_cond));
         toolBar.add(boton3);
+        boton3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ChangeWeatherDialog c = new ChangeWeatherDialog(_ctrl);
+            }
+        });
         toolBar.addSeparator();
 
         JButton boton4 = new JButton((_ejec));
@@ -92,8 +97,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         boton6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                int option = JOptionPane.showConfirmDialog(null,"¿Quieres cerrar la aplicación?","",OK_CANCEL_OPTION);
+                int option = JOptionPane.showConfirmDialog(null,"¿Quieres cerrar la aplicacion?","",OK_CANCEL_OPTION);
                 if(option == JFileChooser.APPROVE_OPTION){
                     System.exit(0);
                 }

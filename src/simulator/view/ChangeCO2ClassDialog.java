@@ -22,8 +22,10 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
     private int ticksActuales;
 
     public ChangeCO2ClassDialog(Controller ctrl) {
+
         super((JFrame) null,"Change CO2 Class",true);
-        this.ctrl = ctrl;//si
+        this.ctrl = ctrl;
+
         this.setLayout(new BorderLayout());
         JTextArea text = new JTextArea("Schedule an event to change the CO2 class of a vehicle after a given number of \nsimulation ticks from now.\n");
         text.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
@@ -55,6 +57,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
         JLabel textTick = new JLabel("Ticks: ");
         textTick.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
         JSpinner spinner = new JSpinner(new SpinnerNumberModel(1,1,null,1)); //Preguntar profesor maximo
+        spinner.setPreferredSize(new Dimension(80, 26));
         panelCentral.add(textTick);
         panelCentral.add(spinner);
         JPanel panelInferior = new JPanel();
