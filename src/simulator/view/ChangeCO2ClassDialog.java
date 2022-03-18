@@ -14,54 +14,112 @@ import java.util.List;
 
 
 public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver {
+    private final String TITLE_TEXT = "Schedule an event to change the CO2 class of a vehicle after a given number of \nsimulation ticks from now.\n";
+    private final String VEHICLE_TEXT = "Vehicle: ";
+    private final String CO2_TEXT = "CO2 Class: ";
+    private final String TICKS_TEXT = "Ticks: ";
+    private final int MAIN_WINDOW_WIDTH = 700;
+    private final int MAIN_WINDOW_HEIGHT = 226;
+    private final int COMBOBOX_WIDTH = 100;
+    private final int COMBOBOX_HEIGHT = 75;
+    private final int TEXT_SIZE = 18;
+    private final int MAX_NUM_ARRAY = 10;
+
     private List<Vehicle> vehicleList;
     private Vehicle[] vehicleArray;
-    private Integer[] numArray= new Integer[10];
-    private JComboBox<Vehicle> boxVehicle;
+    private Integer[] numArray= new Integer[MAX_NUM_ARRAY];
     private Controller ctrl;
     private int ticksActuales;
+
+    private JComboBox<Vehicle> boxVehicle;
+    private JComboBox<Integer> boxCO2;
+    private JSpinner spinner;
 
     public ChangeCO2ClassDialog(Controller ctrl) {
 
         super((JFrame) null,"Change CO2 Class",true);
         this.ctrl = ctrl;
-
+        init();
+    }
+    private void init(){
+        //Parametros JDialog
         this.setLayout(new BorderLayout());
-        JTextArea text = new JTextArea("Schedule an event to change the CO2 class of a vehicle after a given number of \nsimulation ticks from now.\n");
-        text.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
-        text.setHighlighter(null);
-        text.setBackground(null);
-        text.setEditable(false);
-        this.setSize(new Dimension(700,226));
+        this.setSize(new Dimension(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT));
         this.setResizable(false);
-        this.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-350,(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-113);
-        this.add(text,BorderLayout.NORTH);
-        JPanel panelCentral = new JPanel();
-        this.add(panelCentral,BorderLayout.CENTER);
-        JLabel textVehicle = new JLabel("Vehicle: ");
-        textVehicle.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
-        boxVehicle = new JComboBox<Vehicle>();
-        boxVehicle.setMaximumSize(new Dimension(100,75));
-        panelCentral.add(textVehicle);
-        panelCentral.add(boxVehicle);
+        this.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(MAIN_WINDOW_WIDTH/2),
+                (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(MAIN_WINDOW_HEIGHT/2));
+
+        //Parametros título (NORTH)
+        iniTitle();
+
+        //Inicializo el array de la contaminación
         for(int i =0; i< 10;i++){
             numArray[i]= i;
         }
-        JLabel textCO2 = new JLabel("CO2 Class: ");
-        textCO2.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
-        JComboBox<Integer> boxCO2 = new JComboBox<Integer>();
+
+        //Parametros elección valores (CENTRE)
+        initCentralBut();
+
+        //Inicialización parte Sur
+        initSouthBut();
+
+
+        this.ctrl.addObserver(this);
+        this.setVisible(true);
+    }
+
+
+    private void iniTitle(){
+        JTextArea text = new JTextArea(TITLE_TEXT);
+        text.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,TEXT_SIZE));
+        text.setHighlighter(null);
+        text.setBackground(null);
+        text.setEditable(false);
+        this.add(text,BorderLayout.NORTH);
+    }
+
+    private void initCentralBut(){
+
+        JPanel panelCentral = new JPanel();
+        this.add(panelCentral,BorderLayout.CENTER);
+
+        //Texto ComboBox Vehicle
+        JLabel textVehicle = new JLabel(VEHICLE_TEXT);
+        textVehicle.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,TEXT_SIZE));
+
+        //ComboBox Vehicle
+        boxVehicle = new JComboBox<Vehicle>();
+        boxVehicle.setMaximumSize(new Dimension(COMBOBOX_WIDTH,COMBOBOX_HEIGHT));
+        panelCentral.add(textVehicle);
+        panelCentral.add(boxVehicle);
+
+        //Texto ComboBox CO2
+        JLabel textCO2 = new JLabel(CO2_TEXT);
+        textCO2.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,TEXT_SIZE));
+
+        //ComboBox CO2
+        boxCO2 = new JComboBox<Integer>();
         boxCO2.setModel(new DefaultComboBoxModel<>(numArray));
-        boxCO2.setMaximumSize(new Dimension(100,75));
+        boxCO2.setMaximumSize(new Dimension( COMBOBOX_WIDTH,COMBOBOX_HEIGHT));
         panelCentral.add(textCO2);
         panelCentral.add(boxCO2);
-        JLabel textTick = new JLabel("Ticks: ");
-        textTick.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,18));
-        JSpinner spinner = new JSpinner(new SpinnerNumberModel(1,1,null,1)); //Preguntar profesor maximo
+
+        //Texto Spinner Ticks
+        JLabel textTick = new JLabel(TICKS_TEXT);
+        textTick.setFont(new Font(Font.SANS_SERIF,Font.PLAIN,TEXT_SIZE));
+
+        //Spinner Ticks
+        spinner = new JSpinner(new SpinnerNumberModel(1,1,null,1)); //Preguntar profesor maximo
         spinner.setPreferredSize(new Dimension(80, 26));
         panelCentral.add(textTick);
         panelCentral.add(spinner);
+    }
+
+    private void initSouthBut(){
         JPanel panelInferior = new JPanel();
         this.add(panelInferior,BorderLayout.SOUTH);
+
+        //Cancel Button
         JButton cancel = new JButton("Cancel");
         panelInferior.add(cancel);
         cancel.addActionListener(new ActionListener() {
@@ -70,6 +128,8 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
                 closeOption();
             }
         });
+
+        //Ok Button
         JButton ok = new JButton("OK");
         panelInferior.add(ok);
         ok.addActionListener(new ActionListener() {
@@ -82,14 +142,13 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
                 closeOption();
             }
         });
-        this.ctrl.addObserver(this);
-        this.setVisible(true);
-
     }
 
     private void closeOption(){
         this.dispose();
     }
+
+
     private void okOption(Vehicle vehiculo,int CO2,int ticks){
         List<Pair<String,Integer>> listPar = new ArrayList<>();
         Pair<String,Integer> par = new Pair<>(vehiculo.getId(),CO2);
@@ -100,8 +159,6 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-        boxVehicle.setModel(new DefaultComboBoxModel<Vehicle>(vehicleArray));
-        ticksActuales = time;
     }
 
     @Override
