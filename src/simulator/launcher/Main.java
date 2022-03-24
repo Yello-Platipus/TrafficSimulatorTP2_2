@@ -151,10 +151,10 @@ public class Main {
 		new MainWindow(controlador);//ª
 
 		if(_outFile != null){
-			controlador.run(ticks,new FileOutputStream(_outFile));
+			controlador.GUIrun(ticks,new FileOutputStream(_outFile));
 		}
 		else{
-			controlador.run(ticks,System.out);
+			controlador.GUIrun(ticks,System.out);
 		}
 
 	}

@@ -36,7 +36,7 @@ public class Controller {
     	else
     		throw new IllegalArgumentException("JSON Object doesnt have \"events\" key");
 	} 
-    public void run(int n, OutputStream out){
+    public void GUIrun(int n, OutputStream out){
         JSONObject jo= new JSONObject();
         JSONArray jsonArray = new JSONArray();
         PrintStream ps = new PrintStream(out);
@@ -46,6 +46,11 @@ public class Controller {
         }
         jo.put("states",jsonArray);
         ps.print(jo.toString(3));
+    }
+    public void GUIrun(int n){
+        for(int i =0; i< n;i++){
+            simulator.advance();
+        }
     }
     public void reset(){
         simulator.reset();
