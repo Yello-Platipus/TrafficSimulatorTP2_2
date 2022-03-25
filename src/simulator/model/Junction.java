@@ -112,7 +112,7 @@ public class Junction extends SimulatedObject{
     public List<Road> getInRoads(){
         return incomingRoadList;
     }
-
+    public Map<Road,List<Vehicle>> getQueueMap(){return  queueMap;}
     public boolean isGreen(Road r){
         return incomingRoadList.indexOf(r) == greenInd;
     }
