@@ -42,10 +42,13 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
                     return junctionList.get(rowIndex).getInRoads().get(junctionList.get(rowIndex).getGreenLightIndex());
                 }
             default:
-                return junctionList.get(rowIndex).getInRoads();
+                if(junctionList.get(rowIndex).getQueueMap().isEmpty()){
+                    return null;
+                }
+                else{
+                    return junctionList.get(rowIndex).getQueueMap();
 
-
-
+                }
         }
     }
     @Override
