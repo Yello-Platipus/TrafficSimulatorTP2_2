@@ -46,7 +46,7 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
                     return null;
                 }
                 else{
-                    return junctionList.get(rowIndex).getQueueMap();
+                    return junctionList.get(rowIndex).getQueueMap();//intentar quitar corchetes
 
                 }
         }
