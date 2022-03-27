@@ -1,9 +1,12 @@
 package simulator.view;
 
+import com.sun.deploy.panel.JreTableModel;
+import com.sun.jmx.snmp.SnmpOpaque;
 import simulator.control.Controller;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
@@ -31,33 +34,32 @@ public class MainWindow extends JFrame {
         mapsPanel.setLayout(new BoxLayout(mapsPanel, BoxLayout.Y_AXIS));
         viewsPanel.add(mapsPanel);
 // tables
-        JTable eventTable = new JTable(new EventsTableModel(_ctrl));
-        eventTable.setShowGrid(false);
-        eventTable.setFillsViewportHeight(true);
+        JTable eventTable = setTablePref(new EventsTableModel(_ctrl));
+
         JPanel eventsView =
                 createViewPanel(eventTable, "Events");
         eventsView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
         tablesPanel.add(eventsView);
 
-        JTable vehicleTable = new JTable(new VehiclesViewTableModel(_ctrl));
-        vehicleTable.setShowGrid(false);
-        vehicleTable.setFillsViewportHeight(true);
+        JTable vehicleTable = setTablePref(new VehiclesViewTableModel(_ctrl));
+
+
         JPanel vehiclesView =
                 createViewPanel(vehicleTable, "Vehicles");
         vehiclesView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
         tablesPanel.add(vehiclesView);
 
-        JTable roadTable = new JTable(new roadsTableModel(_ctrl));
-        roadTable.setShowGrid(false);
-        roadTable.setFillsViewportHeight(true);
+        JTable roadTable = setTablePref(new roadsTableModel(_ctrl));
+
+
         JPanel roadsView =
                 createViewPanel(roadTable, "Roads");
         roadsView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
         tablesPanel.add(roadsView);
 
-        JTable juntionTable = new JTable(new junctionsTableModel(_ctrl));
-        juntionTable.setShowGrid(false);
-        juntionTable.setFillsViewportHeight(true);
+        JTable juntionTable = setTablePref(new junctionsTableModel(_ctrl));
+
+
         JPanel junctionsView =
                 createViewPanel(juntionTable, "Junctions");
         junctionsView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
@@ -82,6 +84,15 @@ public class MainWindow extends JFrame {
         p.setBorder(BorderFactory.createTitledBorder(borde,title));
         p.add(new JScrollPane(c));
         return p;
+    }
+    private JTable setTablePref(AbstractTableModel model){
+        JTable table = new JTable(model);
+        table.getTableHeader().setBackground(Color.white);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.getTableHeader().setBorder(BorderFactory.createLineBorder(Color.white));
+        table.setShowGrid(false);
+        table.setFillsViewportHeight(true);
+        return table;
     }
 }
 
