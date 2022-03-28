@@ -10,13 +10,13 @@ import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class roadsTableModel extends AbstractTableModel implements TrafficSimObserver {
+public class RoadsTableModel extends AbstractTableModel implements TrafficSimObserver {
 
     private Controller ctrl;
     private List<Road> roadList;
     private final int numeroColumnas = 7;
 
-    public roadsTableModel(Controller ctrl){
+    public RoadsTableModel(Controller ctrl){
         
         this.ctrl = ctrl;
         this.ctrl.addObserver(this);

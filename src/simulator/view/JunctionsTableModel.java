@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class junctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
+public class JunctionsTableModel extends AbstractTableModel implements TrafficSimObserver {
     private Controller ctrl;
     private List<Junction> junctionList;
     private final int numeroColumnas = 3;
 
-    public junctionsTableModel(Controller ctrl){
+    public JunctionsTableModel(Controller ctrl){
 
         this.ctrl = ctrl;
         this.ctrl.addObserver(this);
@@ -46,8 +46,7 @@ public class junctionsTableModel extends AbstractTableModel implements TrafficSi
                     return null;
                 }
                 else{
-                    return junctionList.get(rowIndex).getQueueMap();//intentar quitar corchetes
-
+                    return junctionList.get(rowIndex).getQueueMap();// TODO intentar quitar corchetes
                 }
         }
     }

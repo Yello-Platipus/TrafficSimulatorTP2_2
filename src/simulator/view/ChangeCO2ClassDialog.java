@@ -36,7 +36,6 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
     private JSpinner spinner;
 
     public ChangeCO2ClassDialog(Controller ctrl) {
-
         super((JFrame) null,"Change CO2 Class",true);
         this.ctrl = ctrl;
         init();

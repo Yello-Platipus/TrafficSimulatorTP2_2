@@ -24,7 +24,6 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
     @Override
     public int getRowCount() {
         return vehiclesList.size();
-
     }
 
     @Override
@@ -60,7 +59,7 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
             case 0:
                 return vehiclesList.get(rowIndex).getId();
             case 1:
-                return vehiclesList.get(rowIndex).getLocation();
+                return (vehiclesList.get(rowIndex).getRoad().getId() + ":" + vehiclesList.get(rowIndex).getLocation()); // TODO QUE HAY QUE PONER SI EL COCHE YA HA LLEGADO?
             case 2:
                 return vehiclesList.get(rowIndex).getItinerary();
             case 3:

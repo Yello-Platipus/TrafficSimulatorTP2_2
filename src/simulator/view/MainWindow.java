@@ -1,7 +1,5 @@
 package simulator.view;
 
-import com.sun.deploy.panel.JreTableModel;
-import com.sun.jmx.snmp.SnmpOpaque;
 import simulator.control.Controller;
 
 import javax.swing.*;
@@ -49,7 +47,7 @@ public class MainWindow extends JFrame {
         vehiclesView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
         tablesPanel.add(vehiclesView);
 
-        JTable roadTable = setTablePref(new roadsTableModel(_ctrl));
+        JTable roadTable = setTablePref(new RoadsTableModel(_ctrl));
 
 
         JPanel roadsView =
@@ -57,7 +55,7 @@ public class MainWindow extends JFrame {
         roadsView.setPreferredSize(new Dimension(TABLE_AND_MAP_WIDTH, TABLE_HEIGHT));
         tablesPanel.add(roadsView);
 
-        JTable juntionTable = setTablePref(new junctionsTableModel(_ctrl));
+        JTable juntionTable = setTablePref(new JunctionsTableModel(_ctrl));
 
 
         JPanel junctionsView =
@@ -76,6 +74,7 @@ public class MainWindow extends JFrame {
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.pack();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
     private JPanel createViewPanel(JComponent c, String title) {
