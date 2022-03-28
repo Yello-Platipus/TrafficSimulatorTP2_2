@@ -46,7 +46,10 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
                     return null;
                 }
                 else{
-                    return junctionList.get(rowIndex).getQueueMap();// TODO intentar quitar corchetes
+                    String ret = new String();
+                    for(Road r : junctionList.get(rowIndex).getInRoads())
+                        ret += r + ":" + junctionList.get(rowIndex).getQueueMap().get(r) + " ";
+                    return ret;
                 }
         }
     }
