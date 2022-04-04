@@ -7,7 +7,7 @@ public class CityRoad extends Road{
     }
 
     @Override
-    void reduceTotalContamination() {//Asegúrate de que el total de contaminación no se vuelve negativo.
+    void reduceTotalContamination() {
         int atmCondition=0;
         switch (weather){
             case WINDY:

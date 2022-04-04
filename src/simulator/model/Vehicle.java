@@ -53,7 +53,7 @@ public class Vehicle extends SimulatedObject{
         }
     }
 
-    void moveToNextRoad(){//FELISIDÁ
+    void moveToNextRoad(){
 
         itineraryIndex++;
 

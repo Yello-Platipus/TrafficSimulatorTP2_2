@@ -47,21 +47,28 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
         for(TrafficSimObserver o : trafficSimObserverList){
             o.onAdvanceStart(roadMap,eventList,simulationTime);
         }
-        for(int i = 0; i < eventList.size(); i++){
-            if(eventList.get(i).getTime() == simulationTime){
-                eventList.get(i).execute(roadMap);
-                eventList.remove(i);
-                i--;
+        try {
+            for (int i = 0; i < eventList.size(); i++) {
+                if (eventList.get(i).getTime() == simulationTime) {
+                    eventList.get(i).execute(roadMap);
+                    eventList.remove(i);
+                    i--;
+                }
             }
+            for (int i = 0; i < roadMap.getJunctions().size(); i++) {
+                roadMap.getJunctions().get(i).advance(simulationTime);
+            }
+            for (int i = 0; i < roadMap.getRoads().size(); i++) {
+                roadMap.getRoads().get(i).advance(simulationTime);
+            }
+        } catch(Exception e){
+            for(TrafficSimObserver o : trafficSimObserverList){
+                o.onError(e.getMessage());
+            }
+            throw e;
         }
-        for(int i = 0; i < roadMap.getJunctions().size(); i++){
-            roadMap.getJunctions().get(i).advance(simulationTime);
-        }
-        for(int i = 0; i < roadMap.getRoads().size(); i++){
-            roadMap.getRoads().get(i).advance(simulationTime);
-        }
-        for(TrafficSimObserver o : trafficSimObserverList){
-            o.onAdvanceEnd(roadMap,eventList,simulationTime);
+        for (TrafficSimObserver o : trafficSimObserverList) {
+            o.onAdvanceEnd(roadMap, eventList, simulationTime);
         }
     }
     
