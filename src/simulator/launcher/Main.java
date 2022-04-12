@@ -148,7 +148,6 @@ public class Main {
 	private static void startBatchMode() throws IOException {
 		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);
 		controlador.loadEvents(new FileInputStream(_inFile));
-		new MainWindow(controlador);//ª
 
 		if(_outFile != null){
 			controlador.GUIrun(ticks,new FileOutputStream(_outFile));
@@ -156,7 +155,6 @@ public class Main {
 		else{
 			controlador.GUIrun(ticks,System.out);
 		}
-
 	}
 	private static void startGUIMode() throws IOException {
 		Controller controlador = new Controller(new TrafficSimulator(),_eventsFactory);

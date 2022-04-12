@@ -14,7 +14,7 @@ public class TrafficSimulator implements Observable<TrafficSimObserver>{
     private int simulationTime = 0;
     private Comparator<Event> c;
     private List<TrafficSimObserver> trafficSimObserverList = new ArrayList<TrafficSimObserver>();
-    //TODO ON ERROR
+
     public TrafficSimulator(){
         roadMap = new RoadMap();
 

@@ -152,7 +152,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 _ctrl.GUIrun(1);
             }
             catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "An erro has ocurred during the execution.\n");
+                JOptionPane.showMessageDialog(null, "An error has ocurred during the execution.\n");
                 stopped = true;
                 return;
             }
@@ -160,7 +160,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 Thread.sleep(100 / (Integer) 1);
             }
             catch (InterruptedException e) {
-                JOptionPane.showMessageDialog(null, "An erro has ocurred during the execution.\n");
+                JOptionPane.showMessageDialog(null, "An error has ocurred during the execution.\n");
                 return;
             }
             SwingUtilities.invokeLater(new Runnable() {
