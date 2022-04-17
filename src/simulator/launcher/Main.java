@@ -164,10 +164,8 @@ public class Main {
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
-
 			public void run() {
-				MainWindow aux = new MainWindow(controlador);
-				aux.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+				new MainWindow(controlador);
 			}
 		});
 
