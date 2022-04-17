@@ -164,7 +164,7 @@ public class Main {
 		}
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
-			public void run() {
+			public void run() {//se podría hacer para cerrarlo cuando le das a la X
 				new MainWindow(controlador);
 			}
 		});
