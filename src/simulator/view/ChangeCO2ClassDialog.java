@@ -135,9 +135,9 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
             @Override
             public void actionPerformed(ActionEvent e) {
                 Vehicle vehiculo = (Vehicle)boxVehicle.getSelectedItem();
-                int CO2 = (int)boxCO2.getSelectedItem();
-                int ticks = (int)spinner.getValue();
-                okOption(vehiculo,CO2,ticks);
+                if(vehiculo !=  null && boxCO2.getSelectedItem() != null){
+                    okOption(vehiculo,(int)boxCO2.getSelectedItem(),(int)spinner.getValue());
+                }
                 closeOption();
             }
         });

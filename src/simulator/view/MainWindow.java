@@ -74,16 +74,10 @@ public class MainWindow extends JFrame {
 
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.pack();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); //Pa que salga en el medio
         this.setVisible(true);
     }
-    private JPanel createViewPanel(JComponent c, String title) {
-        JPanel p = new JPanel(new BorderLayout());
-        Border borde = BorderFactory.createLineBorder(Color.black,2);
-        p.setBorder(BorderFactory.createTitledBorder(borde,title));
-        p.add(new JScrollPane(c));
-        return p;
-    }
+
     private JTable setTablePref(AbstractTableModel model){
         JTable table = new JTable(model);
         table.getTableHeader().setBackground(Color.white);
@@ -92,6 +86,14 @@ public class MainWindow extends JFrame {
         table.setShowGrid(false);
         table.setFillsViewportHeight(true);
         return table;
+    }
+
+    private JPanel createViewPanel(JComponent c, String title) {
+        JPanel p = new JPanel(new BorderLayout());
+        Border borde = BorderFactory.createLineBorder(Color.black,2);
+        p.setBorder(BorderFactory.createTitledBorder(borde,title));
+        p.add(new JScrollPane(c));
+        return p;
     }
 }
 

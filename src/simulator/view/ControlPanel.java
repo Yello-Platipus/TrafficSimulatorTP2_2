@@ -18,21 +18,15 @@ import java.lang.System;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 
 public class ControlPanel extends JPanel implements TrafficSimObserver {
-    private ImageIcon file;
-    private ImageIcon cont;
-    private ImageIcon cond;
-    private ImageIcon exec;
-    private ImageIcon stop;
-    private ImageIcon exit;
     private boolean stopped = false;
     private String myUnicodeSymbol = "\u00BF";
 
-    private JButton boton1;
-    private JButton boton2;
-    private JButton boton3;
-    private JButton boton4;
-    private JButton boton5;
-    private JButton boton6;
+    private JButton fileChooser;
+    private JButton changeC02Button;
+    private JButton changeWeatherButton;
+    private JButton runButton;
+    private JButton stopButton;
+    private JButton exitButton;
     private JSpinner spinner;
 
     private Controller _ctrl;
@@ -42,24 +36,16 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         _ctrl.addObserver(this);
         this.setLayout(new BorderLayout());
         initGUI();
-        botoncicos();
     }
+
     private void initGUI(){
-        file = loadImage("open.png");
-        cont = loadImage("co2class.png");
-        cond = loadImage("weather.png");
-        exec = loadImage("run.png");
-        stop = loadImage("stop.png");
-        exit = loadImage("exit.png");
-    }
-    private void botoncicos(){
         JToolBar toolBar = new JToolBar();
         this.add(toolBar);
 
-        boton1 = new JButton((file));
-        toolBar.add(boton1);
+        fileChooser = new JButton(( loadImage("open.png")));
+        toolBar.add(fileChooser);
         toolBar.addSeparator();
-        boton1.addActionListener(new ActionListener() {
+        fileChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser("resources");
@@ -78,18 +64,18 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             }
         });
 
-        boton2 = new JButton((cont));
-        toolBar.add(boton2);
-        boton2.addActionListener(new ActionListener() {
+        changeC02Button = new JButton((loadImage("co2class.png")));
+        toolBar.add(changeC02Button);
+        changeC02Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ChangeCO2ClassDialog c = new ChangeCO2ClassDialog(_ctrl);
             }
         });
 
-        boton3 = new JButton((cond));
-        toolBar.add(boton3);
-        boton3.addActionListener(new ActionListener() {
+        changeWeatherButton = new JButton((loadImage("weather.png")));
+        toolBar.add(changeWeatherButton);
+        changeWeatherButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ChangeWeatherDialog c = new ChangeWeatherDialog(_ctrl);
@@ -97,9 +83,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         });
         toolBar.addSeparator();
 
-        boton4 = new JButton((exec));
-        toolBar.add(boton4);
-        boton4.addActionListener(new ActionListener() {
+        runButton = new JButton((loadImage("run.png")));
+        toolBar.add(runButton);
+        runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stopped = false;
@@ -108,9 +94,9 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             }
         });
 
-        boton5 = new JButton((stop));
-        toolBar.add(boton5);
-        boton5.addActionListener(new ActionListener() {
+        stopButton = new JButton((loadImage("stop.png")));
+        toolBar.add(stopButton);
+        stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 stop();
@@ -127,10 +113,10 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         spinner.setMaximumSize(new Dimension(3499, 25));
         toolBar.add(spinner);
 
-        boton6 = new JButton((exit));
+        exitButton = new JButton((loadImage("exit.png")));
         toolBar.add(new JSeparator(SwingConstants.VERTICAL));
-        toolBar.add(boton6);
-        boton6.addActionListener(new ActionListener() {
+        toolBar.add(exitButton);
+        exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int option = JOptionPane.showConfirmDialog(null,myUnicodeSymbol + "Quieres cerrar la aplicacion?","",OK_CANCEL_OPTION);
@@ -177,11 +163,11 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
     }
 
     private void enableToolBar(boolean b) {
-        boton1.setEnabled(b);
-        boton2.setEnabled(b);
-        boton3.setEnabled(b);
-        boton4.setEnabled(b);
-        boton6.setEnabled(b); // TODO PUEDE QUE NO HAYA QUE DESHABILITARLO
+        fileChooser.setEnabled(b);
+        changeC02Button.setEnabled(b);
+        changeWeatherButton.setEnabled(b);
+        runButton.setEnabled(b);
+        exitButton.setEnabled(b); // TODO PUEDE QUE NO HAYA QUE DESHABILITARLO
     }
 
     private void stop() {
