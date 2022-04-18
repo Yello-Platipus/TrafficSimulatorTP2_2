@@ -68,20 +68,17 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
-        this.junctionList = map.getJunctions();
-        this.fireTableDataChanged();
+
     }
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        this.junctionList = map.getJunctions();
-        this.fireTableDataChanged();
+        update(map);
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-
-
+        update(map);
     }
 
     @Override
@@ -92,12 +89,15 @@ public class JunctionsTableModel extends AbstractTableModel implements TrafficSi
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-        this.junctionList = map.getJunctions();
-        this.fireTableDataChanged();
+        update(map);
     }
 
     @Override
     public void onError(String err) {
 
+    }
+    public void update(RoadMap map){
+        this.junctionList = map.getJunctions();
+        this.fireTableDataChanged();
     }
 }

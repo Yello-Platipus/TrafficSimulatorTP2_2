@@ -1,10 +1,7 @@
 package simulator.view;
 
 import simulator.control.Controller;
-import simulator.model.Event;
-import simulator.model.RoadMap;
-import simulator.model.TrafficSimObserver;
-import simulator.model.Vehicle;
+import simulator.model.*;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -59,7 +56,18 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
             case 0:
                 return vehiclesList.get(rowIndex).getId();
             case 1:
-                return (vehiclesList.get(rowIndex).getRoad().getId() + ":" + vehiclesList.get(rowIndex).getLocation()); // TODO QUE HAY QUE PONER SI EL COCHE YA HA LLEGADO?
+                VehicleStatus status = vehiclesList.get(rowIndex).getStatus();
+                if(status == VehicleStatus.TRAVELING){
+                    return (vehiclesList.get(rowIndex).getRoad().getId() + ":" + vehiclesList.get(rowIndex).getLocation());
+                }
+                else if(status== VehicleStatus.ARRIVED){
+                    return "Arrived";
+                }
+                else if( status== VehicleStatus.WAITING){
+                    return "Waiting:"+ vehiclesList.get(rowIndex).getItinerary().get(vehiclesList.get(rowIndex).getIndex());
+                }
+
+
             case 2:
                 return vehiclesList.get(rowIndex).getItinerary();
             case 3:
@@ -82,14 +90,12 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        this.vehiclesList = map.getVehicles();
-        this.fireTableDataChanged();
+        update(map);
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-        this.vehiclesList = map.getVehicles();
-        this.fireTableDataChanged();
+        update(map);
     }
 
     @Override
@@ -99,12 +105,15 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-        this.vehiclesList = map.getVehicles();
-        this.fireTableDataChanged();
+        update(map);
     }
 
     @Override
     public void onError(String err) {
 
+    }
+    public void update(RoadMap map){
+        this.vehiclesList = map.getVehicles();
+        this.fireTableDataChanged();
     }
 }

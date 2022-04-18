@@ -128,4 +128,7 @@ public class Vehicle extends SimulatedObject{
     public Road getRoad(){
         return currentRoad;
     }
+    public int getIndex(){
+        return itineraryIndex;
+    }
 }

@@ -25,7 +25,7 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver {
     private int currTime;
 
     public ChangeWeatherDialog(Controller ctrl){
-        super((JFrame) null, "Change Road Weather", true);
+        super();
         this.ctrl = ctrl;
         init();
     }
@@ -43,6 +43,8 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver {
         this.setSize(new Dimension(700,226));
         this.setLayout(new BorderLayout(20, 20));
         this.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-350,(int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-113);
+        this.setTitle("Change Road Weather");
+        this.setModal(true);
         statusBox.setSize(new Dimension(80, 26));
         roadBox.setSize(new Dimension(80, 26));
 
@@ -119,8 +121,7 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver {
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        roadBox.setModel(new DefaultComboBoxModel<Road>(map.getRoadArray()));
-        currTime = time;
+        update(map,time);
     }
 
     @Override
@@ -135,12 +136,15 @@ public class ChangeWeatherDialog extends JDialog implements TrafficSimObserver {
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
-        roadBox.setModel(new DefaultComboBoxModel<Road>(map.getRoadArray()));
-        currTime = time;
+        update(map,time);
     }
 
     @Override
     public void onError(String err) {
 
+    }
+    public void update(RoadMap map, int time){
+        roadBox.setModel(new DefaultComboBoxModel<Road>(map.getRoadArray()));
+        currTime = time;
     }
 }

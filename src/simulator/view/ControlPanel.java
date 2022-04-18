@@ -49,7 +49,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         fileChooser.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser chooser = new JFileChooser("resources");
+                JFileChooser chooser = new JFileChooser("resources/examples");
                 chooser.setFileFilter(new FileNameExtensionFilter("JSON File", "json"));
                 int option = chooser.showOpenDialog(null);
                 if(option == JFileChooser.APPROVE_OPTION){

@@ -36,7 +36,7 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
     private JSpinner spinner;
 
     public ChangeCO2ClassDialog(Controller ctrl) {
-        super((JFrame) null,"Change CO2 Class",true);
+        super();
         this.ctrl = ctrl;
         init();
     }
@@ -47,6 +47,8 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
         this.setResizable(false);
         this.setLocation((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2)-(MAIN_WINDOW_WIDTH/2),
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2)-(MAIN_WINDOW_HEIGHT/2));
+        this.setTitle("Change C02 class");
+        this.setModal(true);
 
         //Parametros título (NORTH)
         iniTitle();
@@ -162,27 +164,12 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
 
     @Override
     public void onAdvanceEnd(RoadMap map, List<Event> events, int time) {
-        vehicleList = map.getVehicles();
-        vehicleArray = new Vehicle[vehicleList.size()];
-        for(int i = 0; i< vehicleList.size();i++){
-            vehicleArray[i] = vehicleList.get(i);
-        }
-        boxVehicle.setModel(new DefaultComboBoxModel<Vehicle>(vehicleArray));
-        ticksActuales = time;
-
+        update(map,time);
     }
 
     @Override
     public void onEventAdded(RoadMap map, List<Event> events, Event e, int time) {
-
-        vehicleList = map.getVehicles();
-        vehicleArray = new Vehicle[vehicleList.size()];
-        for(int i = 0; i< vehicleList.size();i++){
-            vehicleArray[i] = vehicleList.get(i);
-        }
-        boxVehicle.setModel(new DefaultComboBoxModel<Vehicle>(vehicleArray));
-        ticksActuales = time;
-
+        update(map,time);
     }
 
     @Override
@@ -197,6 +184,16 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
 
     @Override
     public void onRegister(RoadMap map, List<Event> events, int time) {
+        update(map,time);
+
+    }
+
+    @Override
+    public void onError(String err) {
+
+    }
+
+    public void update(RoadMap map, int time){
         vehicleList = map.getVehicles();
         vehicleArray = new Vehicle[vehicleList.size()];
         for(int i = 0; i< vehicleList.size();i++){
@@ -204,11 +201,5 @@ public class ChangeCO2ClassDialog extends JDialog implements TrafficSimObserver 
         }
         boxVehicle.setModel(new DefaultComboBoxModel<Vehicle>(vehicleArray));
         ticksActuales = time;
-
-    }
-
-    @Override
-    public void onError(String err) {
-
     }
 }
