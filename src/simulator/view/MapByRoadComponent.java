@@ -105,14 +105,14 @@ public class MapByRoadComponent extends JPanel implements TrafficSimObserver {
         g.setColor(_JUNCTION_COLOR);
         g.fillOval(x1 - _JRADIUS / 2, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
         g.setColor(_JUNCTION_LABEL_COLOR);
-        g.drawString(r.getSrc().getId(), x1, y - 6);
+        g.drawString(r.getSrc().getId(), x1 - 5, y - 8);
 
         Color c = r.getDest().isGreen(r) ? _GREEN_LIGHT_COLOR : _RED_LIGHT_COLOR;
 
         g.setColor(c);
         g.fillOval(x2 - _JRADIUS / 2, y - _JRADIUS / 2, _JRADIUS, _JRADIUS);
         g.setColor(_JUNCTION_LABEL_COLOR);
-        g.drawString(r.getDest().getId(), x2, y - 6);
+        g.drawString(r.getDest().getId(), x2 - 5, y - 8);
     }
 
     private void drawWeather(Graphics g, Road r){

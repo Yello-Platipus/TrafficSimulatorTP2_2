@@ -93,11 +93,9 @@ public class Main {
 	}
 
 	private static void parseInFileOption(CommandLine line) throws ParseException {
-		if(_mode.equals("console")){
-			_inFile = line.getOptionValue("i");
-			if (_inFile == null) {
-				throw new ParseException("An events file is missing");
-			}
+		_inFile = line.getOptionValue("i");
+		if (_inFile == null && _mode == "console") {
+			throw new ParseException("An events file is missing");
 		}
 	}
 
