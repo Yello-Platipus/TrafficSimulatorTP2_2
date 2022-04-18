@@ -19,6 +19,9 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
         this.setLayout(new BorderLayout());
         ctrl.addObserver(this);
         _ctrl = ctrl;
+        initGUI();
+    }
+    void initGUI(){
         tiempo = new JLabel(" Time: "+ finalTime);
         tiempo.setFont(new Font(Font.SERIF,Font.PLAIN,16));
         tiempo.setPreferredSize(new Dimension(130,30));
@@ -26,7 +29,6 @@ public class StatusBar extends JPanel implements TrafficSimObserver {
         evento = new JLabel(" ");
         this.add(evento,BorderLayout.CENTER);
     }
-    //Preguntar profesor
     @Override
     public void onAdvanceStart(RoadMap map, List<Event> events, int time) {
 

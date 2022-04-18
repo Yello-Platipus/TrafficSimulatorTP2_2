@@ -6,6 +6,7 @@ import simulator.model.RoadMap;
 import simulator.model.TrafficSimObserver;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +50,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser("resources");
+                chooser.setFileFilter(new FileNameExtensionFilter("JSON File", "json"));
                 int option = chooser.showOpenDialog(null);
                 if(option == JFileChooser.APPROVE_OPTION){
                     try{
@@ -58,11 +60,12 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                         _ctrl.loadEvents(file);
                     }
                     catch (Exception exception){
-                        System.out.println("El fichero no existe o saltó una excepción en loadEvents");
+                        JOptionPane.showMessageDialog((Frame)SwingUtilities.getWindowAncestor(ControlPanel.this),"Se produjo un error en la selección de archivos");
                     }
                 }
             }
         });
+
 
         changeC02Button = new JButton((loadImage("co2class.png")));
         toolBar.add(changeC02Button);
@@ -72,6 +75,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 ChangeCO2ClassDialog c = new ChangeCO2ClassDialog(_ctrl);
             }
         });
+
 
         changeWeatherButton = new JButton((loadImage("weather.png")));
         toolBar.add(changeWeatherButton);
@@ -83,6 +87,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         });
         toolBar.addSeparator();
 
+
         runButton = new JButton((loadImage("run.png")));
         toolBar.add(runButton);
         runButton.addActionListener(new ActionListener() {
@@ -93,6 +98,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
                 run_sim((Integer)spinner.getValue());
             }
         });
+
 
         stopButton = new JButton((loadImage("stop.png")));
         toolBar.add(stopButton);
@@ -112,6 +118,7 @@ public class ControlPanel extends JPanel implements TrafficSimObserver {
         spinner = new JSpinner(new SpinnerNumberModel(1,1,null,1)); //Preguntar profesor maximo
         spinner.setMaximumSize(new Dimension(3499, 25));
         toolBar.add(spinner);
+
 
         exitButton = new JButton((loadImage("exit.png")));
         toolBar.add(new JSeparator(SwingConstants.VERTICAL));
