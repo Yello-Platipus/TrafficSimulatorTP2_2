@@ -100,7 +100,7 @@ public class VehiclesViewTableModel extends AbstractTableModel implements Traffi
 
     @Override
     public void onReset(RoadMap map, List<Event> events, int time) {
-        vehiclesList = new ArrayList<Vehicle>();
+        update(map);
     }
 
     @Override

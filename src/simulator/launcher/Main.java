@@ -109,6 +109,8 @@ public class Main {
 		if(_mode.equals("console")){
 			ticks = Integer.valueOf(line.getOptionValue("t"));
 		}
+		else
+			ticks = _timeLimitDefaultValue;
 	}
 
 	private static void parseModeOption(CommandLine line) throws ParseException {
